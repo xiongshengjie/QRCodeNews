@@ -1,6 +1,7 @@
 package cn.xcloude.QRCodeNews.serviceImpl;
 
 import cn.xcloude.QRCodeNews.service.NewsService;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -8,5 +9,6 @@ import cn.xcloude.QRCodeNews.service.NewsService;
  * @date 2018/1/15 下午 3:11
  */
 
+@Service("newsService")
 public class NewsServiceImpl implements NewsService {
 }
