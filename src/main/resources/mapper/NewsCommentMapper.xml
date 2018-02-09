@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xcloude.QRCodeNews.mapper.NewsCommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.xcloude.QRCodeNews.entity.NewsComment" >
+    <constructor >
+      <idArg column="comment_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="new_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="comment" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id_from" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id_to" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    comment_id, new_id, comment, user_id_from, user_id_to, create_datetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.xcloude.QRCodeNews.entity.NewsCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from news_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from news_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.xcloude.QRCodeNews.entity.NewsComment" >
+    insert into news_comment (comment_id, new_id, comment, 
+      user_id_from, user_id_to, create_datetime
+      )
+    values (#{commentId,jdbcType=INTEGER}, #{newId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{userIdFrom,jdbcType=VARCHAR}, #{userIdTo,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xcloude.QRCodeNews.entity.NewsComment" >
+    insert into news_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="newId != null" >
+        new_id,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="userIdFrom != null" >
+        user_id_from,
+      </if>
+      <if test="userIdTo != null" >
+        user_id_to,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="newId != null" >
+        #{newId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdFrom != null" >
+        #{userIdFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdTo != null" >
+        #{userIdTo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xcloude.QRCodeNews.entity.NewsComment" >
+    update news_comment
+    <set >
+      <if test="newId != null" >
+        new_id = #{newId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdFrom != null" >
+        user_id_from = #{userIdFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdTo != null" >
+        user_id_to = #{userIdTo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xcloude.QRCodeNews.entity.NewsComment" >
+    update news_comment
+    set new_id = #{newId,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      user_id_from = #{userIdFrom,jdbcType=VARCHAR},
+      user_id_to = #{userIdTo,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP}
+    where comment_id = #{commentId,jdbcType=INTEGER}
+  </update>
+</mapper>
