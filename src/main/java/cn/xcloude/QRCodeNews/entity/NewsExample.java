@@ -385,63 +385,133 @@ public class NewsExample {
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassIsNull() {
-            addCriterion("news_class is null");
+        public Criteria andNewsImgIsNull() {
+            addCriterion("news_img is null");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassIsNotNull() {
-            addCriterion("news_class is not null");
+        public Criteria andNewsImgIsNotNull() {
+            addCriterion("news_img is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassEqualTo(Integer value) {
-            addCriterion("news_class =", value, "newsClass");
+        public Criteria andNewsImgEqualTo(String value) {
+            addCriterion("news_img =", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassNotEqualTo(Integer value) {
-            addCriterion("news_class <>", value, "newsClass");
+        public Criteria andNewsImgNotEqualTo(String value) {
+            addCriterion("news_img <>", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassGreaterThan(Integer value) {
-            addCriterion("news_class >", value, "newsClass");
+        public Criteria andNewsImgGreaterThan(String value) {
+            addCriterion("news_img >", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassGreaterThanOrEqualTo(Integer value) {
-            addCriterion("news_class >=", value, "newsClass");
+        public Criteria andNewsImgGreaterThanOrEqualTo(String value) {
+            addCriterion("news_img >=", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassLessThan(Integer value) {
-            addCriterion("news_class <", value, "newsClass");
+        public Criteria andNewsImgLessThan(String value) {
+            addCriterion("news_img <", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassLessThanOrEqualTo(Integer value) {
-            addCriterion("news_class <=", value, "newsClass");
+        public Criteria andNewsImgLessThanOrEqualTo(String value) {
+            addCriterion("news_img <=", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassIn(List<Integer> values) {
-            addCriterion("news_class in", values, "newsClass");
+        public Criteria andNewsImgLike(String value) {
+            addCriterion("news_img like", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassNotIn(List<Integer> values) {
-            addCriterion("news_class not in", values, "newsClass");
+        public Criteria andNewsImgNotLike(String value) {
+            addCriterion("news_img not like", value, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassBetween(Integer value1, Integer value2) {
-            addCriterion("news_class between", value1, value2, "newsClass");
+        public Criteria andNewsImgIn(List<String> values) {
+            addCriterion("news_img in", values, "newsImg");
             return (Criteria) this;
         }
 
-        public Criteria andNewsClassNotBetween(Integer value1, Integer value2) {
-            addCriterion("news_class not between", value1, value2, "newsClass");
+        public Criteria andNewsImgNotIn(List<String> values) {
+            addCriterion("news_img not in", values, "newsImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsImgBetween(String value1, String value2) {
+            addCriterion("news_img between", value1, value2, "newsImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsImgNotBetween(String value1, String value2) {
+            addCriterion("news_img not between", value1, value2, "newsImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryIsNull() {
+            addCriterion("news_category is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryIsNotNull() {
+            addCriterion("news_category is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryEqualTo(Integer value) {
+            addCriterion("news_category =", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryNotEqualTo(Integer value) {
+            addCriterion("news_category <>", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryGreaterThan(Integer value) {
+            addCriterion("news_category >", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryGreaterThanOrEqualTo(Integer value) {
+            addCriterion("news_category >=", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryLessThan(Integer value) {
+            addCriterion("news_category <", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryLessThanOrEqualTo(Integer value) {
+            addCriterion("news_category <=", value, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryIn(List<Integer> values) {
+            addCriterion("news_category in", values, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryNotIn(List<Integer> values) {
+            addCriterion("news_category not in", values, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryBetween(Integer value1, Integer value2) {
+            addCriterion("news_category between", value1, value2, "newsCategory");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewsCategoryNotBetween(Integer value1, Integer value2) {
+            addCriterion("news_category not between", value1, value2, "newsCategory");
             return (Criteria) this;
         }
 

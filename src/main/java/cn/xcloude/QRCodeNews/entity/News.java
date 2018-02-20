@@ -11,16 +11,19 @@ public class News {
 
     private String newsAuthor;
 
-    private Integer newsClass;
+    private String newsImg;
+
+    private Integer newsCategory;
 
     private Date createDatetime;
 
-    public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, Integer newsClass, Date createDatetime) {
+    public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, String newsImg, Integer newsCategory, Date createDatetime) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
         this.newsUrl = newsUrl;
         this.newsAuthor = newsAuthor;
-        this.newsClass = newsClass;
+        this.newsImg = newsImg;
+        this.newsCategory = newsCategory;
         this.createDatetime = createDatetime;
     }
 
@@ -60,12 +63,20 @@ public class News {
         this.newsAuthor = newsAuthor == null ? null : newsAuthor.trim();
     }
 
-    public Integer getNewsClass() {
-        return newsClass;
+    public String getNewsImg() {
+        return newsImg;
     }
 
-    public void setNewsClass(Integer newsClass) {
-        this.newsClass = newsClass;
+    public void setNewsImg(String newsImg) {
+        this.newsImg = newsImg == null ? null : newsImg.trim();
+    }
+
+    public Integer getNewsCategory() {
+        return newsCategory;
+    }
+
+    public void setNewsCategory(Integer newsCategory) {
+        this.newsCategory = newsCategory;
     }
 
     public Date getCreateDatetime() {

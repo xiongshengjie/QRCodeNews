@@ -2,11 +2,8 @@ package cn.xcloude.QRCodeNews.mapper;
 
 import cn.xcloude.QRCodeNews.entity.NewsComment;
 import cn.xcloude.QRCodeNews.entity.NewsCommentExample;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
-@Repository
 public interface NewsCommentMapper {
     int deleteByPrimaryKey(Integer commentId);
 
