@@ -1,5 +1,6 @@
 package cn.xcloude.QRCodeNews.serviceImpl;
 
+import cn.xcloude.QRCodeNews.mapper.NewsMapper;
 import cn.xcloude.QRCodeNews.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
