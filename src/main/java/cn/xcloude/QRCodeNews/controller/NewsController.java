@@ -30,44 +30,17 @@ public class NewsController {
 
     @RequestMapping("/publish")
     @ResponseBody
-    public Map<String, Object> publishNews(@RequestParam("file") MultipartFile[] files,
+    public Map<String, Object> publishNews(@RequestParam(value = "file",required = false) MultipartFile[] files,
                                            @RequestParam("title") String title,
                                            @RequestParam("author") String author,
                                            @RequestParam("category") String category,
                                            @RequestParam("html") String html,
                                            HttpServletRequest request) {
 
-        String allImgUrl = "";
         Map<String, Object> result = new HashMap<String, Object>();
 
-        if (files.length > 0) {
-            for (MultipartFile file : files) {
-                String fileName = file.getOriginalFilename();
-                // 得到随机名称
-                String randomName = FileUploadUtils.generateRandonFileName(fileName);
-                // 根据日期得到目录
-                String randomDir = FileUploadUtils.generateRandomDir();
-                // 图片存储父目录
-                String imgurl_parent = "img" + randomDir;
-                File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
-                // 验证目录是否存在，如果不存在，创建出来
-                if (!parentDir.exists()) {
-                    parentDir.mkdirs();
-                }
-                String imgurl = imgurl_parent + "/" + randomName;
-                allImgUrl += imgurl + "|";
-                File diskFile = new File(parentDir + "/" + randomName);
-                try {
-                    file.transferTo(diskFile);
-                } catch (IOException e) {
-                    result.put("states", 5000);
-                    result.put("message", "服务器错误");
-                    return result;
-                }
-            }
-        }
-        result.put("states", 2000);
-        result.put("message", "发布成功");
+        result = newsService.publishNews(files,title,author,category,html,request);
+
         return result;
     }
 }

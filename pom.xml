@@ -24,6 +24,7 @@
         <com.fasterxml.jackson.core.version>2.5.2</com.fasterxml.jackson.core.version>
         <pagehelper.version>4.1.6</pagehelper.version>
         <mysql.connector.version>6.0.6</mysql.connector.version>
+        <jsoup.version>1.11.2</jsoup.version>
     </properties>
 
     <dependencies>
@@ -175,7 +176,15 @@
             <version>${mysql.connector.version}</version>
         </dependency>
 
-         <dependency>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+
+
+        <dependency>
           <groupId>javax.servlet</groupId>
           <artifactId>javax.servlet-api</artifactId>
           <version>3.0.1</version>

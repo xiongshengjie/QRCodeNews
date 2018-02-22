@@ -17,14 +17,13 @@ public class News {
 
     private Date createDatetime;
 
-    public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, String newsImg, Integer newsCategory, Date createDatetime) {
+    public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, String newsImg, Integer newsCategory) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
         this.newsUrl = newsUrl;
         this.newsAuthor = newsAuthor;
         this.newsImg = newsImg;
         this.newsCategory = newsCategory;
-        this.createDatetime = createDatetime;
     }
 
     public News() {
