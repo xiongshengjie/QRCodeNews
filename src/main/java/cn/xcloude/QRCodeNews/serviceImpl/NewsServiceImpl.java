@@ -1,5 +1,6 @@
 package cn.xcloude.QRCodeNews.serviceImpl;
 
+import cn.xcloude.QRCodeNews.constant.Api;
 import cn.xcloude.QRCodeNews.constant.Constants;
 import cn.xcloude.QRCodeNews.entity.News;
 import cn.xcloude.QRCodeNews.mapper.NewsMapper;
@@ -76,8 +77,8 @@ public class NewsServiceImpl implements NewsService {
                     file.transferTo(diskFile);
                 } catch (IOException e) {
                     log.error("图片上传IO异常:" + e);
-                    result.put("states", 5000);
-                    result.put("message", "服务器错误");
+                    result.put(Api.STATUS, Api.SERVER_ERROR);
+                    result.put(Api.MESSAGE, "服务器错误");
                     return result;
                 }
             }
@@ -107,13 +108,13 @@ public class NewsServiceImpl implements NewsService {
             log.error("编码异常：" + e);
         } catch (FileNotFoundException e) {
             log.error("文件写入NotFound异常：" + e);
-            result.put("states", 5000);
-            result.put("message", "服务器错误");
+            result.put(Api.STATUS, Api.SERVER_ERROR);
+            result.put(Api.MESSAGE, "服务器错误");
             return result;
         } catch (IOException e) {
             log.error("文件写入IO异常：" + e);
-            result.put("states", 5000);
-            result.put("message", "服务器错误");
+            result.put(Api.STATUS, Api.SERVER_ERROR);
+            result.put(Api.MESSAGE, "服务器错误");
             return result;
         }
 
@@ -121,8 +122,8 @@ public class NewsServiceImpl implements NewsService {
         News recordNew = new News(id,title,htmlParent+"/"+randomHtml,author,allImgUrl,Integer.parseInt(category));
         newsMapper.insert(recordNew);
 
-        result.put("states", 2000);
-        result.put("message", "发布成功");
+        result.put(Api.STATUS, Api.SUCCESS);
+        result.put(Api.MESSAGE, "发布成功");
         result.put("newsId",id);
 
         return result;
