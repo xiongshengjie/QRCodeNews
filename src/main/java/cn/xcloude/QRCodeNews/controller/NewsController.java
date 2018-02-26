@@ -2,7 +2,6 @@ package cn.xcloude.QRCodeNews.controller;
 
 
 import cn.xcloude.QRCodeNews.service.NewsService;
-import cn.xcloude.QRCodeNews.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,17 +27,13 @@ public class NewsController {
 
     @RequestMapping("/publish")
     @ResponseBody
-    public Map<String, Object> publishNews(@RequestParam(value = "file",required = false) MultipartFile[] files,
+    public Map<String, Object> publishNews(@RequestParam(value = "file", required = false) MultipartFile[] files,
                                            @RequestParam("title") String title,
                                            @RequestParam("author") String author,
                                            @RequestParam("category") String category,
                                            @RequestParam("html") String html,
                                            HttpServletRequest request) {
 
-        Map<String, Object> result = new HashMap<String, Object>();
-
-        result = newsService.publishNews(files,title,author,category,html,request);
-
-        return result;
+        return newsService.publishNews(files, title, author, category, html, request);
     }
 }

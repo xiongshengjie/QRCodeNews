@@ -1,14 +1,11 @@
 package cn.xcloude.QRCodeNews.controller;
 
-import cn.xcloude.QRCodeNews.entity.NewsCategory;
 import cn.xcloude.QRCodeNews.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +14,7 @@ import java.util.Map;
  */
 
 @Controller
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
@@ -24,7 +22,7 @@ public class CategoryController {
 
     @RequestMapping("getAllCategory")
     @ResponseBody
-    public Map<String,Object> getAllCategory(){
+    public Map<String, Object> getAllCategory() {
         return categoryService.getAllCategory();
     }
 }

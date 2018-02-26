@@ -124,7 +124,7 @@ public class NewsServiceImpl implements NewsService {
 
         result.put(Api.STATUS, Api.SUCCESS);
         result.put(Api.MESSAGE, "发布成功");
-        result.put("newsId",id);
+        result.put("news",recordNew);
 
         return result;
     }
