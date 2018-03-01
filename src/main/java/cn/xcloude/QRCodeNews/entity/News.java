@@ -17,6 +17,8 @@ public class News {
 
     private Date createDatetime;
 
+    private Date updateDatetime;
+
     public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, String newsImg, Integer newsCategory) {
         this.newsId = newsId;
         this.newsTitle = newsTitle;
@@ -84,5 +86,13 @@ public class News {
 
     public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 }

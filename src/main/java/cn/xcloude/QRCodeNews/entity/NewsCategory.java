@@ -9,10 +9,13 @@ public class NewsCategory {
 
     private Date createDatetime;
 
-    public NewsCategory(Integer categoryId, String categoryName, Date createDatetime) {
+    private Date updateDatetime;
+
+    public NewsCategory(Integer categoryId, String categoryName, Date createDatetime, Date updateDatetime) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.createDatetime = createDatetime;
+        this.updateDatetime = updateDatetime;
     }
 
     public NewsCategory() {
@@ -41,5 +44,13 @@ public class NewsCategory {
 
     public void setCreateDatetime(Date createDatetime) {
         this.createDatetime = createDatetime;
+    }
+
+    public Date getUpdateDatetime() {
+        return updateDatetime;
+    }
+
+    public void setUpdateDatetime(Date updateDatetime) {
+        this.updateDatetime = updateDatetime;
     }
 }

@@ -294,6 +294,66 @@ public class NewsCategoryExample {
             addCriterion("create_datetime not between", value1, value2, "createDatetime");
             return (Criteria) this;
         }
+
+        public Criteria andUpdateDatetimeIsNull() {
+            addCriterion("update_datetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeIsNotNull() {
+            addCriterion("update_datetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeEqualTo(Date value) {
+            addCriterion("update_datetime =", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotEqualTo(Date value) {
+            addCriterion("update_datetime <>", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeGreaterThan(Date value) {
+            addCriterion("update_datetime >", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_datetime >=", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeLessThan(Date value) {
+            addCriterion("update_datetime <", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_datetime <=", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeIn(List<Date> values) {
+            addCriterion("update_datetime in", values, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotIn(List<Date> values) {
+            addCriterion("update_datetime not in", values, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeBetween(Date value1, Date value2) {
+            addCriterion("update_datetime between", value1, value2, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_datetime not between", value1, value2, "updateDatetime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

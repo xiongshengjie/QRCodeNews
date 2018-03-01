@@ -1,6 +1,7 @@
 package cn.xcloude.QRCodeNews.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserExample {
@@ -651,6 +652,126 @@ public class UserExample {
 
         public Criteria andUserHeadNotBetween(String value1, String value2) {
             addCriterion("user_head not between", value1, value2, "userHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeIsNull() {
+            addCriterion("create_datetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeIsNotNull() {
+            addCriterion("create_datetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeEqualTo(Date value) {
+            addCriterion("create_datetime =", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeNotEqualTo(Date value) {
+            addCriterion("create_datetime <>", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeGreaterThan(Date value) {
+            addCriterion("create_datetime >", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_datetime >=", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeLessThan(Date value) {
+            addCriterion("create_datetime <", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_datetime <=", value, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeIn(List<Date> values) {
+            addCriterion("create_datetime in", values, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeNotIn(List<Date> values) {
+            addCriterion("create_datetime not in", values, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeBetween(Date value1, Date value2) {
+            addCriterion("create_datetime between", value1, value2, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_datetime not between", value1, value2, "createDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeIsNull() {
+            addCriterion("update_datetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeIsNotNull() {
+            addCriterion("update_datetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeEqualTo(Date value) {
+            addCriterion("update_datetime =", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotEqualTo(Date value) {
+            addCriterion("update_datetime <>", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeGreaterThan(Date value) {
+            addCriterion("update_datetime >", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_datetime >=", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeLessThan(Date value) {
+            addCriterion("update_datetime <", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_datetime <=", value, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeIn(List<Date> values) {
+            addCriterion("update_datetime in", values, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotIn(List<Date> values) {
+            addCriterion("update_datetime not in", values, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeBetween(Date value1, Date value2) {
+            addCriterion("update_datetime between", value1, value2, "updateDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_datetime not between", value1, value2, "updateDatetime");
             return (Criteria) this;
         }
     }

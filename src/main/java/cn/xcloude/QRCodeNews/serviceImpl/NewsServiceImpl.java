@@ -120,7 +120,7 @@ public class NewsServiceImpl implements NewsService {
 
         String id = IdUtils.getUUID();
         News recordNew = new News(id,title,htmlParent+"/"+randomHtml,author,allImgUrl,Integer.parseInt(category));
-        newsMapper.insert(recordNew);
+        newsMapper.insertSelective(recordNew);
 
         result.put(Api.STATUS, Api.SUCCESS);
         result.put(Api.MESSAGE, "发布成功");
