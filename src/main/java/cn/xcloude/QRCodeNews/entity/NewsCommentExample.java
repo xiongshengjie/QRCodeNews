@@ -165,73 +165,73 @@ public class NewsCommentExample {
             return (Criteria) this;
         }
 
-        public Criteria andNewIdIsNull() {
-            addCriterion("new_id is null");
+        public Criteria andNewsIdIsNull() {
+            addCriterion("news_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdIsNotNull() {
-            addCriterion("new_id is not null");
+        public Criteria andNewsIdIsNotNull() {
+            addCriterion("news_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdEqualTo(String value) {
-            addCriterion("new_id =", value, "newId");
+        public Criteria andNewsIdEqualTo(String value) {
+            addCriterion("news_id =", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdNotEqualTo(String value) {
-            addCriterion("new_id <>", value, "newId");
+        public Criteria andNewsIdNotEqualTo(String value) {
+            addCriterion("news_id <>", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdGreaterThan(String value) {
-            addCriterion("new_id >", value, "newId");
+        public Criteria andNewsIdGreaterThan(String value) {
+            addCriterion("news_id >", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdGreaterThanOrEqualTo(String value) {
-            addCriterion("new_id >=", value, "newId");
+        public Criteria andNewsIdGreaterThanOrEqualTo(String value) {
+            addCriterion("news_id >=", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdLessThan(String value) {
-            addCriterion("new_id <", value, "newId");
+        public Criteria andNewsIdLessThan(String value) {
+            addCriterion("news_id <", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdLessThanOrEqualTo(String value) {
-            addCriterion("new_id <=", value, "newId");
+        public Criteria andNewsIdLessThanOrEqualTo(String value) {
+            addCriterion("news_id <=", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdLike(String value) {
-            addCriterion("new_id like", value, "newId");
+        public Criteria andNewsIdLike(String value) {
+            addCriterion("news_id like", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdNotLike(String value) {
-            addCriterion("new_id not like", value, "newId");
+        public Criteria andNewsIdNotLike(String value) {
+            addCriterion("news_id not like", value, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdIn(List<String> values) {
-            addCriterion("new_id in", values, "newId");
+        public Criteria andNewsIdIn(List<String> values) {
+            addCriterion("news_id in", values, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdNotIn(List<String> values) {
-            addCriterion("new_id not in", values, "newId");
+        public Criteria andNewsIdNotIn(List<String> values) {
+            addCriterion("news_id not in", values, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdBetween(String value1, String value2) {
-            addCriterion("new_id between", value1, value2, "newId");
+        public Criteria andNewsIdBetween(String value1, String value2) {
+            addCriterion("news_id between", value1, value2, "newsId");
             return (Criteria) this;
         }
 
-        public Criteria andNewIdNotBetween(String value1, String value2) {
-            addCriterion("new_id not between", value1, value2, "newId");
+        public Criteria andNewsIdNotBetween(String value1, String value2) {
+            addCriterion("news_id not between", value1, value2, "newsId");
             return (Criteria) this;
         }
 

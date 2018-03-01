@@ -5,7 +5,7 @@ import java.util.Date;
 public class NewsComment {
     private Integer commentId;
 
-    private String newId;
+    private String newsId;
 
     private String comment;
 
@@ -15,9 +15,9 @@ public class NewsComment {
 
     private Date createDatetime;
 
-    public NewsComment(Integer commentId, String newId, String comment, String userIdFrom, String userIdTo, Date createDatetime) {
+    public NewsComment(Integer commentId, String newsId, String comment, String userIdFrom, String userIdTo, Date createDatetime) {
         this.commentId = commentId;
-        this.newId = newId;
+        this.newsId = newsId;
         this.comment = comment;
         this.userIdFrom = userIdFrom;
         this.userIdTo = userIdTo;
@@ -36,12 +36,12 @@ public class NewsComment {
         this.commentId = commentId;
     }
 
-    public String getNewId() {
-        return newId;
+    public String getNewsId() {
+        return newsId;
     }
 
-    public void setNewId(String newId) {
-        this.newId = newId == null ? null : newId.trim();
+    public void setNewsId(String newsId) {
+        this.newsId = newsId == null ? null : newsId.trim();
     }
 
     public String getComment() {
