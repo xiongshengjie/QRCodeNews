@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.xcloude.QRCodeNews.mapper.NewsMapper" >
+  <resultMap id="BaseResultMap" type="cn.xcloude.QRCodeNews.entity.News" >
+    <constructor >
+      <idArg column="news_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="news_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="news_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="news_author" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="news_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="news_category" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    news_id, news_title, news_url, news_author, news_img, news_category, create_datetime, 
+    update_datetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.xcloude.QRCodeNews.entity.NewsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from news
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where news_id = #{newsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from news
+    where news_id = #{newsId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.xcloude.QRCodeNews.entity.News" >
+    insert into news (news_id, news_title, news_url, 
+      news_author, news_img, news_category, 
+      create_datetime, update_datetime)
+    values (#{newsId,jdbcType=VARCHAR}, #{newsTitle,jdbcType=VARCHAR}, #{newsUrl,jdbcType=VARCHAR}, 
+      #{newsAuthor,jdbcType=VARCHAR}, #{newsImg,jdbcType=VARCHAR}, #{newsCategory,jdbcType=INTEGER}, 
+      #{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.xcloude.QRCodeNews.entity.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="newsId != null" >
+        news_id,
+      </if>
+      <if test="newsTitle != null" >
+        news_title,
+      </if>
+      <if test="newsUrl != null" >
+        news_url,
+      </if>
+      <if test="newsAuthor != null" >
+        news_author,
+      </if>
+      <if test="newsImg != null" >
+        news_img,
+      </if>
+      <if test="newsCategory != null" >
+        news_category,
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime,
+      </if>
+      <if test="updateDatetime != null" >
+        update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="newsId != null" >
+        #{newsId,jdbcType=VARCHAR},
+      </if>
+      <if test="newsTitle != null" >
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsUrl != null" >
+        #{newsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="newsAuthor != null" >
+        #{newsAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="newsImg != null" >
+        #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newsCategory != null" >
+        #{newsCategory,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDatetime != null" >
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.xcloude.QRCodeNews.entity.News" >
+    update news
+    <set >
+      <if test="newsTitle != null" >
+        news_title = #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsUrl != null" >
+        news_url = #{newsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="newsAuthor != null" >
+        news_author = #{newsAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="newsImg != null" >
+        news_img = #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newsCategory != null" >
+        news_category = #{newsCategory,jdbcType=INTEGER},
+      </if>
+      <if test="createDatetime != null" >
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDatetime != null" >
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where news_id = #{newsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.xcloude.QRCodeNews.entity.News" >
+    update news
+    set news_title = #{newsTitle,jdbcType=VARCHAR},
+      news_url = #{newsUrl,jdbcType=VARCHAR},
+      news_author = #{newsAuthor,jdbcType=VARCHAR},
+      news_img = #{newsImg,jdbcType=VARCHAR},
+      news_category = #{newsCategory,jdbcType=INTEGER},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+    where news_id = #{newsId,jdbcType=VARCHAR}
+  </update>
+</mapper>
