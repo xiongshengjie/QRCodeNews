@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-03-01 10:29:49
+Date: 2018-03-01 10:55:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,7 +75,7 @@ INSERT INTO `news_category` VALUES ('10', '时尚', '2018-02-26 20:19:50', '2018
 DROP TABLE IF EXISTS `news_comment`;
 CREATE TABLE `news_comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
-  `new_id` varchar(32) NOT NULL COMMENT '新闻id',
+  `news_id` varchar(36) NOT NULL COMMENT '新闻id',
   `comment` varchar(256) NOT NULL COMMENT '评论详情',
   `user_id_from` varchar(32) NOT NULL COMMENT '评论发出用户id',
   `user_id_to` varchar(32) DEFAULT NULL COMMENT '被评论用户id',
