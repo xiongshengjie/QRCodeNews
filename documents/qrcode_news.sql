@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50720
+Source Server         : MyDataBase
+Source Server Version : 50710
 Source Host           : localhost:3306
 Source Database       : qrcode_news
 
 Target Server Type    : MYSQL
-Target Server Version : 50720
+Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2018-03-01 10:55:02
+Date: 2018-03-04 10:29:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for news
+-- Table structure for `news`
 -- ----------------------------
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
@@ -44,7 +44,7 @@ INSERT INTO `news` VALUES ('d350a996-8af0-4723-9f71-3050a64ca43a', '123', 'html/
 INSERT INTO `news` VALUES ('d5cec05e-d6d1-45b2-a536-8893ff3ab311', '震惊，扫码看新闻应用就要发布了', 'html/2018/2/22/87708191-c874-4351-abe6-4a305b1a3b74.html', 'admin', 'img/2018/2/22/6ec4ac89-3863-4604-ac47-0f00b10cc1d6.jpg|', '1', '2018-02-26 11:49:14', '2018-03-01 10:07:10');
 
 -- ----------------------------
--- Table structure for news_category
+-- Table structure for `news_category`
 -- ----------------------------
 DROP TABLE IF EXISTS `news_category`;
 CREATE TABLE `news_category` (
@@ -70,15 +70,15 @@ INSERT INTO `news_category` VALUES ('9', '财经', '2018-02-26 20:19:41', '2018-
 INSERT INTO `news_category` VALUES ('10', '时尚', '2018-02-26 20:19:50', '2018-03-01 10:12:04');
 
 -- ----------------------------
--- Table structure for news_comment
+-- Table structure for `news_comment`
 -- ----------------------------
 DROP TABLE IF EXISTS `news_comment`;
 CREATE TABLE `news_comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
   `news_id` varchar(36) NOT NULL COMMENT '新闻id',
   `comment` varchar(256) NOT NULL COMMENT '评论详情',
-  `user_id_from` varchar(32) NOT NULL COMMENT '评论发出用户id',
-  `user_id_to` varchar(32) DEFAULT NULL COMMENT '被评论用户id',
+  `user_id_from` varchar(36) NOT NULL COMMENT '评论发出用户id',
+  `user_id_to` varchar(36) DEFAULT NULL COMMENT '被评论用户id',
   `create_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
   PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -88,7 +88,7 @@ CREATE TABLE `news_comment` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for news_user
+-- Table structure for `news_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `news_user`;
 CREATE TABLE `news_user` (
@@ -102,7 +102,8 @@ CREATE TABLE `news_user` (
   `user_head` varchar(32) NOT NULL COMMENT '头像地址',
   `create_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `unique_key_mobile` (`user_mobile`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
