@@ -28,4 +28,9 @@ public class UserController {
         return userService.login(userName,passWord);
     }
 
+    @RequestMapping("register")
+    @ResponseBody
+    public Map<String,Object> register(String userMobile){
+        return userService.SMSCode(userMobile);
+    }
 }
