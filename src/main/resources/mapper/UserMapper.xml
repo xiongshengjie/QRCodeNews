@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.xcloude.QRCodeNews.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="cn.xcloude.QRCodeNews.entity.User" >
-    <constructor >
-      <idArg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_mobile" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_description" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_head" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-    </constructor>
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="cn.xcloude.QRCodeNews.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="cn.xcloude.QRCodeNews.entity.User">
+        <constructor>
+            <idArg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_nickname" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_mobile" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_sex" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_head" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_datetime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     user_id, user_name, user_password, user_nickname, user_mobile, user_sex, user_description, 
     user_head, create_datetime, update_datetime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.xcloude.QRCodeNews.entity.UserExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from news_user
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from news_user
-    where user_id = #{userId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.xcloude.QRCodeNews.entity.UserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from news_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from news_user
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from news_user
     where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="cn.xcloude.QRCodeNews.entity.User" >
+    <insert id="insert" parameterType="cn.xcloude.QRCodeNews.entity.User">
     insert into news_user (user_id, user_name, user_password, 
       user_nickname, user_mobile, user_sex, 
       user_description, user_head, create_datetime, 
@@ -83,107 +84,107 @@
       #{userDescription,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, 
       #{updateDatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.xcloude.QRCodeNews.entity.User" >
-    insert into news_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="userPassword != null" >
-        user_password,
-      </if>
-      <if test="userNickname != null" >
-        user_nickname,
-      </if>
-      <if test="userMobile != null" >
-        user_mobile,
-      </if>
-      <if test="userSex != null" >
-        user_sex,
-      </if>
-      <if test="userDescription != null" >
-        user_description,
-      </if>
-      <if test="userHead != null" >
-        user_head,
-      </if>
-      <if test="createDatetime != null" >
-        create_datetime,
-      </if>
-      <if test="updateDatetime != null" >
-        update_datetime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPassword != null" >
-        #{userPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="userNickname != null" >
-        #{userNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="userMobile != null" >
-        #{userMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="userSex != null" >
-        #{userSex,jdbcType=INTEGER},
-      </if>
-      <if test="userDescription != null" >
-        #{userDescription,jdbcType=VARCHAR},
-      </if>
-      <if test="userHead != null" >
-        #{userHead,jdbcType=VARCHAR},
-      </if>
-      <if test="createDatetime != null" >
-        #{createDatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDatetime != null" >
-        #{updateDatetime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.xcloude.QRCodeNews.entity.User" >
-    update news_user
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userPassword != null" >
-        user_password = #{userPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="userNickname != null" >
-        user_nickname = #{userNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="userMobile != null" >
-        user_mobile = #{userMobile,jdbcType=VARCHAR},
-      </if>
-      <if test="userSex != null" >
-        user_sex = #{userSex,jdbcType=INTEGER},
-      </if>
-      <if test="userDescription != null" >
-        user_description = #{userDescription,jdbcType=VARCHAR},
-      </if>
-      <if test="userHead != null" >
-        user_head = #{userHead,jdbcType=VARCHAR},
-      </if>
-      <if test="createDatetime != null" >
-        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDatetime != null" >
-        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where user_id = #{userId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.xcloude.QRCodeNews.entity.User" >
+    <insert id="insertSelective" parameterType="cn.xcloude.QRCodeNews.entity.User">
+        insert into news_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userNickname != null">
+                user_nickname,
+            </if>
+            <if test="userMobile != null">
+                user_mobile,
+            </if>
+            <if test="userSex != null">
+                user_sex,
+            </if>
+            <if test="userDescription != null">
+                user_description,
+            </if>
+            <if test="userHead != null">
+                user_head,
+            </if>
+            <if test="createDatetime != null">
+                create_datetime,
+            </if>
+            <if test="updateDatetime != null">
+                update_datetime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userDescription != null">
+                #{userDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="userHead != null">
+                #{userHead,jdbcType=VARCHAR},
+            </if>
+            <if test="createDatetime != null">
+                #{createDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDatetime != null">
+                #{updateDatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.xcloude.QRCodeNews.entity.User">
+        update news_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickname != null">
+                user_nickname = #{userNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userDescription != null">
+                user_description = #{userDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="userHead != null">
+                user_head = #{userHead,jdbcType=VARCHAR},
+            </if>
+            <if test="createDatetime != null">
+                create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDatetime != null">
+                update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.xcloude.QRCodeNews.entity.User">
     update news_user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR},
@@ -196,4 +197,10 @@
       update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+
+    <select id="loginByName" parameterType="cn.xcloude.QRCodeNews.entity.User" resultType="cn.xcloude.QRCodeNews.entity.User">
+    SELECT * FROM news_user
+    WHERE user_name = #{userName,jdbcType=VARCHAR}
+    and user_password = #{userPassword,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -23,6 +23,11 @@ public class User {
 
     private Date updateDatetime;
 
+    public User(String userName,String userPassword){
+        this.userName = userName;
+        this.userPassword = userPassword;
+    }
+
     public User(String userId, String userName, String userPassword, String userNickname, String userMobile, Integer userSex, String userDescription, String userHead, Date createDatetime, Date updateDatetime) {
         this.userId = userId;
         this.userName = userName;

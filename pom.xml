@@ -183,6 +183,12 @@
             <version>${jsoup.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>sms</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
 
         <dependency>
           <groupId>javax.servlet</groupId>

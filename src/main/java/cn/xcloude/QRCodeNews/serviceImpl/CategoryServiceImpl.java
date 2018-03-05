@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         result.put(Api.STATUS,Api.SUCCESS);
         result.put(Api.MESSAGE,"获取分类成功");
-        result.put("categories",categories);
+        result.put("result",categories);
         return result;
     }
 
