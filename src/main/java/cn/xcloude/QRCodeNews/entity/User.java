@@ -28,17 +28,12 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public User(String userId, String userName, String userPassword, String userNickname, String userMobile, Integer userSex, String userDescription, String userHead, Date createDatetime, Date updateDatetime) {
+    public User(String userId, String userName, String userPassword, String userNickname, String userMobile) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userNickname = userNickname;
         this.userMobile = userMobile;
-        this.userSex = userSex;
-        this.userDescription = userDescription;
-        this.userHead = userHead;
-        this.createDatetime = createDatetime;
-        this.updateDatetime = updateDatetime;
     }
 
     public User() {

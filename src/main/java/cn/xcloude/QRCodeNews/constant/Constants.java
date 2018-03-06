@@ -14,6 +14,6 @@ public final class Constants {
     public static String AppKey = "504a8fec500b7d91490ef624c2fe98b2";
     public static int type = 0;    //短信类型 0：普通 1：营销
     public static String nationCode = "86";
-    public static String shortMessage = "【码上新闻】您的验证码是：";
+    public static long expireTime = 120L;
 
 }

@@ -11,4 +11,6 @@ public interface UserService {
     Map<String,Object> login(String userName, String passWord);
 
     Map<String,Object> SMSCode(String userMobile);
+
+    Map<String, Object> checkSmsCode(String userMobile,String smsCode);
 }

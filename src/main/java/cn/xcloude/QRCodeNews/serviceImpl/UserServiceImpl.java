@@ -5,8 +5,12 @@ import cn.xcloude.QRCodeNews.constant.Constants;
 import cn.xcloude.QRCodeNews.entity.User;
 import cn.xcloude.QRCodeNews.mapper.UserMapper;
 import cn.xcloude.QRCodeNews.service.UserService;
+import cn.xcloude.QRCodeNews.utils.IdUtils;
+import cn.xcloude.QRCodeNews.utils.RedisUtil;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +26,15 @@ import java.util.Random;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Override
     public Map<String, Object> login(String userName, String passWord) {
 
         Map<String, Object> result = new HashMap<>();
@@ -50,12 +60,12 @@ public class UserServiceImpl implements UserService {
 
         try {
             SmsSingleSender sender = new SmsSingleSender(Constants.AppID,Constants.AppKey);
-            SmsSingleSenderResult smsResult = sender.send(Constants.type,Constants.nationCode,userMobile,Constants.shortMessage + SMSCode ,null,null);
+            SmsSingleSenderResult smsResult = sender.send(Constants.type,Constants.nationCode,userMobile,"【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。" ,null,null);
             if(smsResult.result == 0){
                 //成功
+                redisUtil.set(userMobile,SMSCode,Constants.expireTime);
                 result.put(Api.STATUS, Api.SUCCESS);
                 result.put(Api.MESSAGE,"获取验证码成功");
-                result.put("result",SMSCode);
                 return result;
             }else {
                 result.put(Api.STATUS, Api.SERVER_ERROR);
@@ -68,4 +78,20 @@ public class UserServiceImpl implements UserService {
             return result;
         }
     }
+
+    @Override
+    public Map<String, Object> checkSmsCode(String userMobile, String smsCode) {
+        Map<String, Object> result = new HashMap<>();
+
+        if(smsCode.equals(redisUtil.get(userMobile))){
+                result.put(Api.STATUS,Api.SUCCESS);
+                result.put(Api.MESSAGE,"验证成功");
+        }else {
+            result.put(Api.STATUS,Api.SERVER_ERROR);
+            result.put(Api.MESSAGE,"验证码错误或已失效");
+        }
+        return result;
+    }
+
+
 }

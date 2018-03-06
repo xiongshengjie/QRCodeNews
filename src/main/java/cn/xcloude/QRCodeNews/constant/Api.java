@@ -13,4 +13,5 @@ public class Api {
     public static final int SUCCESS = 2000;
     public static final int SERVER_ERROR = 5000;
     public static final int USER_ERROR = 4001;
+    public static final int MOBILE_ERROR = 4002;
 }

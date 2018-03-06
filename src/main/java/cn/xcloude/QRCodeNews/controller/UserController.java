@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
@@ -22,15 +21,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> login(String userName, String passWord){
-        return userService.login(userName,passWord);
+    public Map<String, Object> login(String userName, String passWord) {
+        return userService.login(userName, passWord);
     }
 
-    @RequestMapping("register")
+    @RequestMapping("getSmsCode")
     @ResponseBody
-    public Map<String,Object> register(String userMobile){
+    public Map<String, Object> register(String userMobile) {
         return userService.SMSCode(userMobile);
+    }
+
+    @RequestMapping("checkSmsCode")
+    @ResponseBody
+    public Map<String,Object> checkSmsCode(String userMobile,String smsCode){
+        return userService.checkSmsCode(userMobile,smsCode);
     }
 }
