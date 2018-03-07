@@ -29,13 +29,13 @@ public class UserController {
 
     @RequestMapping("getSmsCode")
     @ResponseBody
-    public Map<String, Object> register(String userMobile) {
-        return userService.SMSCode(userMobile);
+    public Map<String, Object> getSmsCode(String userMobile) {
+        return userService.getSmsCode(userMobile);
     }
 
     @RequestMapping("checkSmsCode")
     @ResponseBody
-    public Map<String,Object> checkSmsCode(String userMobile,String smsCode){
+    public Map<String,Object> checkSmsCode(String userMobile,int smsCode){
         return userService.checkSmsCode(userMobile,smsCode);
     }
 }

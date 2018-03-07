@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> SMSCode(String userMobile) {
+    public Map<String, Object> getSmsCode(String userMobile) {
 
         Map<String, Object> result = new HashMap<>();
 
@@ -80,10 +80,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> checkSmsCode(String userMobile, String smsCode) {
+    public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
         Map<String, Object> result = new HashMap<>();
 
-        if(smsCode.equals(redisUtil.get(userMobile))){
+        if(smsCode == (Integer) redisUtil.get(userMobile)){
                 result.put(Api.STATUS,Api.SUCCESS);
                 result.put(Api.MESSAGE,"验证成功");
         }else {
