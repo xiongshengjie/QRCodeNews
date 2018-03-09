@@ -1,5 +1,6 @@
 package cn.xcloude.QRCodeNews.controller;
 
+import cn.xcloude.QRCodeNews.entity.User;
 import cn.xcloude.QRCodeNews.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,5 +38,11 @@ public class UserController {
     @ResponseBody
     public Map<String,Object> checkSmsCode(String userMobile,int smsCode){
         return userService.checkSmsCode(userMobile,smsCode);
+    }
+
+    @RequestMapping(value = "register" , method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> register(User user){
+        return userService.register(user);
     }
 }

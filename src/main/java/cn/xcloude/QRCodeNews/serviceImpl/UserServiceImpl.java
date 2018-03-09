@@ -8,12 +8,13 @@ import cn.xcloude.QRCodeNews.service.UserService;
 import cn.xcloude.QRCodeNews.utils.IdUtils;
 import cn.xcloude.QRCodeNews.utils.RedisUtil;
 import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsSingleSenderResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -59,22 +60,22 @@ public class UserServiceImpl implements UserService {
         int SMSCode = new Random().nextInt(899999) + 100000;
 
         try {
-            SmsSingleSender sender = new SmsSingleSender(Constants.AppID,Constants.AppKey);
-            SmsSingleSenderResult smsResult = sender.send(Constants.type,Constants.nationCode,userMobile,"【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。" ,null,null);
-            if(smsResult.result == 0){
+            SmsSingleSender sender = new SmsSingleSender(Constants.AppID, Constants.AppKey);
+            //SmsSingleSenderResult smsResult = sender.send(Constants.type,Constants.nationCode,userMobile,"【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。" ,null,null);
+            if (/*smsResult.result == 0*/true) {
                 //成功
-                redisUtil.set(userMobile,SMSCode,Constants.expireTime);
+                redisUtil.set(userMobile, SMSCode, Constants.expireTime);
                 result.put(Api.STATUS, Api.SUCCESS);
-                result.put(Api.MESSAGE,"获取验证码成功");
+                result.put(Api.MESSAGE, "获取验证码成功");
                 return result;
-            }else {
+            } else {
                 result.put(Api.STATUS, Api.SERVER_ERROR);
-                result.put(Api.MESSAGE,"短信服务异常");
+                result.put(Api.MESSAGE, "短信服务异常");
                 return result;
             }
         } catch (Exception e) {
             result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE,"服务器内部错误");
+            result.put(Api.MESSAGE, "服务器内部错误");
             return result;
         }
     }
@@ -83,12 +84,45 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
         Map<String, Object> result = new HashMap<>();
 
-        if(smsCode == (Integer) redisUtil.get(userMobile)){
-                result.put(Api.STATUS,Api.SUCCESS);
-                result.put(Api.MESSAGE,"验证成功");
-        }else {
-            result.put(Api.STATUS,Api.SERVER_ERROR);
-            result.put(Api.MESSAGE,"验证码错误或已失效");
+        Integer realSmsCode = (Integer) redisUtil.get(userMobile);
+        if (realSmsCode != null) {
+            if (smsCode == realSmsCode) {
+                result.put(Api.STATUS, Api.SUCCESS);
+                result.put(Api.MESSAGE, "验证成功");
+            } else {
+                result.put(Api.STATUS, Api.SERVER_ERROR);
+                result.put(Api.MESSAGE, "验证码错误");
+            }
+        } else {
+            result.put(Api.STATUS, Api.SERVER_ERROR);
+            result.put(Api.MESSAGE, "验证码已失效");
+        }
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> register(User user) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        String id = IdUtils.getUUID();
+        user.setUserId(id);
+        int flag = 0;
+        try {
+            flag = userMapper.insertSelective(user);
+        } catch (Exception e) {
+            logger.error("user插入出错：" + e);
+            result.put(Api.STATUS, Api.USER_ERROR);
+            result.put(Api.MESSAGE, "手机号已被注册");
+            return result;
+        }
+        if (flag <= 0) {
+            result.put(Api.STATUS, Api.SERVER_ERROR);
+            result.put(Api.MESSAGE, "注册失败");
+        } else {
+            result.put(Api.STATUS, Api.SUCCESS);
+            result.put(Api.MESSAGE, "注册成功");
+            result.put("result", user);
         }
         return result;
     }

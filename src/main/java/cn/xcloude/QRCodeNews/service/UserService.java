@@ -1,5 +1,7 @@
 package cn.xcloude.QRCodeNews.service;
 
+import cn.xcloude.QRCodeNews.entity.User;
+
 import java.util.Map;
 
 /**
@@ -8,9 +10,11 @@ import java.util.Map;
  */
 public interface UserService {
 
-    Map<String,Object> login(String userName, String passWord);
+    Map<String, Object> login(String userName, String passWord);
 
-    Map<String,Object> getSmsCode(String userMobile);
+    Map<String, Object> getSmsCode(String userMobile);
 
-    Map<String, Object> checkSmsCode(String userMobile,int smsCode);
+    Map<String, Object> checkSmsCode(String userMobile, int smsCode);
+
+    Map<String, Object> register(User user);
 }
