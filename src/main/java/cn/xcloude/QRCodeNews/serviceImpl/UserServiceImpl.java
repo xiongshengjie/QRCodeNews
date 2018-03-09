@@ -8,13 +8,12 @@ import cn.xcloude.QRCodeNews.service.UserService;
 import cn.xcloude.QRCodeNews.utils.IdUtils;
 import cn.xcloude.QRCodeNews.utils.RedisUtil;
 import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -61,14 +60,14 @@ public class UserServiceImpl implements UserService {
 
         try {
             SmsSingleSender sender = new SmsSingleSender(Constants.AppID, Constants.AppKey);
-            //SmsSingleSenderResult smsResult = sender.send(Constants.type,Constants.nationCode,userMobile,"【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。" ,null,null);
-            if (/*smsResult.result == 0*/true) {
+            SmsSingleSenderResult smsResult = sender.send(Constants.type, Constants.nationCode, userMobile, "【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。", null, null);
+            if (smsResult.result == 0){
                 //成功
                 redisUtil.set(userMobile, SMSCode, Constants.expireTime);
                 result.put(Api.STATUS, Api.SUCCESS);
                 result.put(Api.MESSAGE, "获取验证码成功");
                 return result;
-            } else {
+            } else{
                 result.put(Api.STATUS, Api.SERVER_ERROR);
                 result.put(Api.MESSAGE, "短信服务异常");
                 return result;
