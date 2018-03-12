@@ -31,7 +31,7 @@
     </bean>
 
     <mvc:annotation-driven/>
-    <mvc:resources mapping="/img/**" location="img/"/>
+    <mvc:resources mapping="/head/**" location="head/"/>
     <mvc:resources mapping="/html/**" location="html/"/>
 
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
