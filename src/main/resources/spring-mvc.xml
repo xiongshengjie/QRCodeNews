@@ -33,6 +33,7 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/head/**" location="head/"/>
     <mvc:resources mapping="/html/**" location="html/"/>
+    <mvc:resources mapping="/img/**" location="img/"/>
 
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

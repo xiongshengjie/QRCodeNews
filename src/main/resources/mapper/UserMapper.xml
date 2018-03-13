@@ -198,9 +198,16 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
-    <select id="loginByName" parameterType="cn.xcloude.QRCodeNews.entity.User" resultType="cn.xcloude.QRCodeNews.entity.User">
+    <select id="loginByName" parameterType="cn.xcloude.QRCodeNews.entity.User"
+            resultType="cn.xcloude.QRCodeNews.entity.User">
     SELECT * FROM news_user
     WHERE user_name = #{userName,jdbcType=VARCHAR}
     and user_password = #{userPassword,jdbcType=VARCHAR}
   </select>
+
+    <select id="isMobileRight" parameterType="string" resultType="cn.xcloude.QRCodeNews.entity.User">
+        SELECT *
+        FROM news_user
+        WHERE user_mobile = #{userMobile,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -99,7 +99,7 @@ CREATE TABLE `news_user` (
   `user_mobile` varchar(32) DEFAULT NULL COMMENT '用户手机号',
   `user_sex` int(1) NOT NULL DEFAULT '0' COMMENT '用户性别 0.不告诉你 1.男 2.女',
   `user_description` varchar(64) DEFAULT NULL COMMENT '用户自我介绍',
-  `user_head` varchar(32) NOT NULL COMMENT '头像地址',
+  `user_head` varchar(64) NOT NULL COMMENT '头像地址',
   `create_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),

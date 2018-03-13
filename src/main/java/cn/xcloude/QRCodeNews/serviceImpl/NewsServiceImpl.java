@@ -51,17 +51,18 @@ public class NewsServiceImpl implements NewsService {
 
             Elements elements = element.getElementsByTag("img");
 
+            // 图片存储父目录
+            String imgurl_parent = "img" + randomDir;
+            File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
+            // 验证目录是否存在，如果不存在，创建出来
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
             for (MultipartFile file : files) {
                 String fileName = file.getOriginalFilename();
                 // 得到随机名称
                 String randomName = FileUploadUtils.generateRandonFileName(fileName);
-                // 图片存储父目录
-                String imgurl_parent = "img" + randomDir;
-                File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
-                // 验证目录是否存在，如果不存在，创建出来
-                if (!parentDir.exists()) {
-                    parentDir.mkdirs();
-                }
                 String imgurl = imgurl_parent + "/" + randomName;
 
                 for (Element imgNode : elements) {

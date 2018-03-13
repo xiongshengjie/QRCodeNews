@@ -5,6 +5,7 @@ import cn.xcloude.QRCodeNews.constant.Constants;
 import cn.xcloude.QRCodeNews.entity.User;
 import cn.xcloude.QRCodeNews.mapper.UserMapper;
 import cn.xcloude.QRCodeNews.service.UserService;
+import cn.xcloude.QRCodeNews.utils.FileUploadUtils;
 import cn.xcloude.QRCodeNews.utils.IdUtils;
 import cn.xcloude.QRCodeNews.utils.RedisUtil;
 import com.github.qcloudsms.SmsSingleSender;
@@ -13,7 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -61,13 +66,13 @@ public class UserServiceImpl implements UserService {
         try {
             SmsSingleSender sender = new SmsSingleSender(Constants.AppID, Constants.AppKey);
             SmsSingleSenderResult smsResult = sender.send(Constants.type, Constants.nationCode, userMobile, "【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。", null, null);
-            if (smsResult.result == 0){
+            if (smsResult.result == 0) {
                 //成功
                 redisUtil.set(userMobile, SMSCode, Constants.expireTime);
                 result.put(Api.STATUS, Api.SUCCESS);
                 result.put(Api.MESSAGE, "获取验证码成功");
                 return result;
-            } else{
+            } else {
                 result.put(Api.STATUS, Api.SERVER_ERROR);
                 result.put(Api.MESSAGE, "短信服务异常");
                 return result;
@@ -100,21 +105,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> register(User user) {
+    public Map<String, Object> register(User user, MultipartFile headFile , HttpServletRequest request) {
 
         Map<String, Object> result = new HashMap<>();
 
-        String id = IdUtils.getUUID();
-        user.setUserId(id);
-        int flag = 0;
-        try {
-            flag = userMapper.insertSelective(user);
-        } catch (Exception e) {
-            logger.error("user插入出错：" + e);
+        if(userMapper.isMobileRight(user.getUserMobile()) != null){
             result.put(Api.STATUS, Api.USER_ERROR);
             result.put(Api.MESSAGE, "手机号已被注册");
             return result;
         }
+
+        if (headFile == null) {
+            user.setUserHead("head/default.png");
+        } else {
+            // 根据日期得到目录
+            String randomDir = FileUploadUtils.generateRandomDir();
+            // 图片存储父目录
+            String imgurl_parent = "head" + randomDir;
+            File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
+            // 验证目录是否存在，如果不存在，创建出来
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            String fileName = headFile.getOriginalFilename();
+            // 得到随机名称
+            String randomName = FileUploadUtils.generateRandonFileName(fileName);
+            String imgurl = imgurl_parent + "/" + randomName;
+            File diskFile = new File(parentDir + "/" + randomName);
+
+            try {
+                headFile.transferTo(diskFile);
+                user.setUserHead(imgurl);
+            } catch (IOException e) {
+                logger.error("head写入失败：" + e);
+                user.setUserHead("head/default.png");
+            }
+        }
+
+        String id = IdUtils.getUUID();
+        user.setUserId(id);
+        int flag = 0;
+        flag = userMapper.insertSelective(user);
         if (flag <= 0) {
             result.put(Api.STATUS, Api.SERVER_ERROR);
             result.put(Api.MESSAGE, "注册失败");

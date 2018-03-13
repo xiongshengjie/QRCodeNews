@@ -23,4 +23,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User loginByName(User record);
+
+    User isMobileRight(String userMobile);
 }
