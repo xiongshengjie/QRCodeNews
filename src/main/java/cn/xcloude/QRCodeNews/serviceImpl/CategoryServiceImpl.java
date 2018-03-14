@@ -6,6 +6,7 @@ import cn.xcloude.QRCodeNews.mapper.NewsCategoryMapper;
 import cn.xcloude.QRCodeNews.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,17 +23,18 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private NewsCategoryMapper categoryMapper;
 
+    @Override
     public Map<String, Object> getAllCategory() {
         Map<String, Object> result = new HashMap<>();
         List<NewsCategory> categories = categoryMapper.selectByExample(null);
-        if (categories == null || categories.size() <= 0) {
+        if (CollectionUtils.isEmpty(categories)) {
             result.put(Api.STATUS, Api.ERROR);
             result.put(Api.MESSAGE, "获取分类失败");
             return result;
         }
-        result.put(Api.STATUS,Api.SUCCESS);
-        result.put(Api.MESSAGE,"获取分类成功");
-        result.put("result",categories);
+        result.put(Api.STATUS, Api.SUCCESS);
+        result.put(Api.MESSAGE, "获取分类成功");
+        result.put("result", categories);
         return result;
     }
 

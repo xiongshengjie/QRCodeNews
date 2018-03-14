@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
                 return result;
             }
         } catch (Exception e) {
+            logger.error("服务器错误：" + e);
             result.put(Api.STATUS, Api.SERVER_ERROR);
             result.put(Api.MESSAGE, "服务器内部错误");
             return result;
@@ -105,11 +106,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> register(User user, MultipartFile headFile , HttpServletRequest request) {
+    public Map<String, Object> register(User user, MultipartFile headFile, HttpServletRequest request) {
 
         Map<String, Object> result = new HashMap<>();
 
-        if(userMapper.isMobileRight(user.getUserMobile()) != null){
+        if (userMapper.isMobileRight(user.getUserMobile()) != null) {
             result.put(Api.STATUS, Api.USER_ERROR);
             result.put(Api.MESSAGE, "手机号已被注册");
             return result;
@@ -121,8 +122,8 @@ public class UserServiceImpl implements UserService {
             // 根据日期得到目录
             String randomDir = FileUploadUtils.generateRandomDir();
             // 图片存储父目录
-            String imgurl_parent = "head" + randomDir;
-            File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
+            String imgurlParent = "head" + randomDir;
+            File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
             // 验证目录是否存在，如果不存在，创建出来
             if (!parentDir.exists()) {
                 parentDir.mkdirs();
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
             String fileName = headFile.getOriginalFilename();
             // 得到随机名称
             String randomName = FileUploadUtils.generateRandonFileName(fileName);
-            String imgurl = imgurl_parent + "/" + randomName;
+            String imgurl = imgurlParent + "/" + randomName;
             File diskFile = new File(parentDir + "/" + randomName);
 
             try {
@@ -145,8 +146,7 @@ public class UserServiceImpl implements UserService {
 
         String id = IdUtils.getUUID();
         user.setUserId(id);
-        int flag = 0;
-        flag = userMapper.insertSelective(user);
+        int flag = userMapper.insertSelective(user);
         if (flag <= 0) {
             result.put(Api.STATUS, Api.SERVER_ERROR);
             result.put(Api.MESSAGE, "注册失败");
