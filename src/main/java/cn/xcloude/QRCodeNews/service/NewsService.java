@@ -4,6 +4,7 @@ package cn.xcloude.QRCodeNews.service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -13,5 +14,5 @@ import java.util.Map;
 
 public interface NewsService {
 
-    Map<String,Object> publishNews(MultipartFile[] files, String title, String author, String category, String html,HttpServletRequest request);
+    Map<String,Object> publishNews(MultipartFile[] files, String title, String author, String category, String html,HttpServletRequest request) throws IOException;
 }

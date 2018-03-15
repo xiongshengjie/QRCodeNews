@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import static cn.xcloude.QRCodeNews.constant.Api.SERVER_ERROR_MESSAGE;
+
 /**
  * @author XiongShengjie
  * @date 2018/3/5 10:01
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             logger.error("服务器错误：" + e);
             result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "服务器内部错误");
+            result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
             return result;
         }
     }

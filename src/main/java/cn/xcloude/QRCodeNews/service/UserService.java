@@ -4,7 +4,6 @@ import cn.xcloude.QRCodeNews.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -19,5 +18,5 @@ public interface UserService {
 
     Map<String, Object> checkSmsCode(String userMobile, int smsCode);
 
-    Map<String, Object> register(User user , MultipartFile headFile , HttpServletRequest request);
+    Map<String, Object> register(User user, MultipartFile headFile, HttpServletRequest request);
 }

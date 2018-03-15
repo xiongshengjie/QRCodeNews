@@ -23,6 +23,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cn.xcloude.QRCodeNews.constant.Api.SERVER_ERROR_MESSAGE;
+
 
 /**
  * @author XiongShengjie
@@ -37,10 +39,10 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private NewsMapper newsMapper;
 
-    public Map<String, Object> publishNews(MultipartFile[] files, String title, String author, String category, String html, HttpServletRequest request) {
+    public Map<String, Object> publishNews(MultipartFile[] files, String title, String author, String category, String html, HttpServletRequest request) throws IOException {
 
-        Map<String, Object> result = new HashMap<String, Object>();
-        String allImgUrl = "";
+        Map<String, Object> result = new HashMap<>();
+        StringBuilder allImgUrlBuilder = new StringBuilder();
         // 根据日期得到目录
         String randomDir = FileUploadUtils.generateRandomDir();
 
@@ -52,8 +54,8 @@ public class NewsServiceImpl implements NewsService {
             Elements elements = element.getElementsByTag("img");
 
             // 图片存储父目录
-            String imgurl_parent = "img" + randomDir;
-            File parentDir = new File(request.getServletContext().getRealPath(imgurl_parent));
+            String imgurlParent = "img" + randomDir;
+            File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
             // 验证目录是否存在，如果不存在，创建出来
             if (!parentDir.exists()) {
                 parentDir.mkdirs();
@@ -63,23 +65,23 @@ public class NewsServiceImpl implements NewsService {
                 String fileName = file.getOriginalFilename();
                 // 得到随机名称
                 String randomName = FileUploadUtils.generateRandonFileName(fileName);
-                String imgurl = imgurl_parent + "/" + randomName;
+                String imgurl = imgurlParent + "/" + randomName;
 
                 for (Element imgNode : elements) {
                     String src = imgNode.attr("src");
-                    if (fileName.equals(src.substring(src.lastIndexOf("/") + 1, src.length()))) {
+                    if (fileName.equals(src.substring(src.lastIndexOf('/') + 1, src.length()))) {
                         imgNode.attr("src", Constants.baseUrl + "/" + imgurl);
                         elements.remove(element);
                     }
                 }
-                allImgUrl += imgurl + "|";
+                allImgUrlBuilder.append(imgurl + "|");
                 File diskFile = new File(parentDir + "/" + randomName);
                 try {
                     file.transferTo(diskFile);
                 } catch (IOException e) {
                     log.error("图片上传IO异常:" + e);
                     result.put(Api.STATUS, Api.SERVER_ERROR);
-                    result.put(Api.MESSAGE, "服务器错误");
+                    result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
                     return result;
                 }
             }
@@ -103,29 +105,35 @@ public class NewsServiceImpl implements NewsService {
             fos = new FileOutputStream(diskFile);
             osw = new OutputStreamWriter(fos, "UTF-8");
             osw.write(HtmlUtil.buildHtml(html, title));
-            osw.close();
-            fos.close();
         } catch (UnsupportedEncodingException e) {
             log.error("编码异常：" + e);
         } catch (FileNotFoundException e) {
             log.error("文件写入NotFound异常：" + e);
             result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "服务器错误");
+            result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
             return result;
         } catch (IOException e) {
             log.error("文件写入IO异常：" + e);
             result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "服务器错误");
+            result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
             return result;
+        } finally {
+            if (fos != null) {
+                fos.close();
+            }
+            if (osw != null) {
+                osw.close();
+            }
         }
 
+        String allImgUrl = allImgUrlBuilder.toString();
         String id = IdUtils.getUUID();
-        News recordNew = new News(id,title,htmlParent+"/"+randomHtml,author,allImgUrl,Integer.parseInt(category));
+        News recordNew = new News(id, title, htmlParent + "/" + randomHtml, author, allImgUrl, Integer.parseInt(category));
         newsMapper.insertSelective(recordNew);
 
         result.put(Api.STATUS, Api.SUCCESS);
         result.put(Api.MESSAGE, "发布成功");
-        result.put("result",recordNew);
+        result.put("result", recordNew);
 
         return result;
     }
