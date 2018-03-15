@@ -48,6 +48,6 @@ public class UserController {
     public Map<String, Object> register(User user,
                                         @RequestParam(value = "headFile", required = false) MultipartFile headFile,
                                         HttpServletRequest request) {
-        return userService.register(user,headFile,request);
+        return userService.register(user, headFile, request);
     }
 }

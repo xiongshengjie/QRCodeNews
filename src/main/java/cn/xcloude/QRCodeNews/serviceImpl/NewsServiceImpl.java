@@ -39,7 +39,7 @@ public class NewsServiceImpl implements NewsService {
     @Autowired
     private NewsMapper newsMapper;
 
-    public Map<String, Object> publishNews(MultipartFile[] files, String title, String author, String category, String html, HttpServletRequest request) throws IOException {
+    public Map<String, Object> publishNews(MultipartFile[] files, String title, String author, String category, String html, HttpServletRequest request) {
 
         Map<String, Object> result = new HashMap<>();
         StringBuilder allImgUrlBuilder = new StringBuilder();
@@ -98,12 +98,11 @@ public class NewsServiceImpl implements NewsService {
 
         File diskFile = new File(parentDir + "/" + randomHtml);
 
-        FileOutputStream fos = null;
-        OutputStreamWriter osw = null;
+        try (
+                FileOutputStream fos = new FileOutputStream(diskFile);
+                OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+        ) {
 
-        try {
-            fos = new FileOutputStream(diskFile);
-            osw = new OutputStreamWriter(fos, "UTF-8");
             osw.write(HtmlUtil.buildHtml(html, title));
         } catch (UnsupportedEncodingException e) {
             log.error("编码异常：" + e);
@@ -117,13 +116,6 @@ public class NewsServiceImpl implements NewsService {
             result.put(Api.STATUS, Api.SERVER_ERROR);
             result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
             return result;
-        } finally {
-            if (fos != null) {
-                fos.close();
-            }
-            if (osw != null) {
-                osw.close();
-            }
         }
 
         String allImgUrl = allImgUrlBuilder.toString();
