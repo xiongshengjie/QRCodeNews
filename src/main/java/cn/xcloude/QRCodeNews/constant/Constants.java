@@ -18,6 +18,9 @@ public final class Constants {
     public static final String AppKey = "504a8fec500b7d91490ef624c2fe98b2";
     public static final int type = 0;    //短信类型 0：普通 1：营销
     public static final String nationCode = "86";
-    public static final long expireTime = 120L;
+
+
+    public static final long SMSexpireTime = 120L;
+    public static final long userExpireTime = 86400L;
 
 }

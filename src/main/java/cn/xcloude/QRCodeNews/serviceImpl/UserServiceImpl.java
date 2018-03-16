@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Random;
 
 import static cn.xcloude.QRCodeNews.constant.Api.SERVER_ERROR_MESSAGE;
+import static cn.xcloude.QRCodeNews.constant.Constants.SMSexpireTime;
+import static cn.xcloude.QRCodeNews.constant.Constants.userExpireTime;
 
 /**
  * @author XiongShengjie
@@ -46,16 +48,30 @@ public class UserServiceImpl implements UserService {
 
         Map<String, Object> result = new HashMap<>();
         User user = new User(userName, passWord);
-        user = userMapper.loginByName(user);
-        if (user == null) {
-            result.put(Api.STATUS, Api.USER_ERROR);
-            result.put(Api.MESSAGE, "用户名或密码错误");
-            return result;
+        User temp = (User) redisUtil.get("User:" + userName);
+
+        if (temp != null) {
+            if (!passWord.equals(user.getUserPassword())) {
+                result.put(Api.STATUS, Api.USER_ERROR);
+                result.put(Api.MESSAGE, "用户名或密码错误");
+                return result;
+            }
+            user = temp;
+        } else {
+            user = userMapper.loginByName(user);
+            if (user == null) {
+                result.put(Api.STATUS, Api.USER_ERROR);
+                result.put(Api.MESSAGE, "用户名或密码错误");
+                return result;
+            } else {
+                redisUtil.set("User:" + userName, user, userExpireTime);
+            }
         }
         result.put(Api.STATUS, Api.SUCCESS);
         result.put(Api.MESSAGE, "登录成功");
         result.put("result", user);
         return result;
+
     }
 
     @Override
@@ -70,7 +86,7 @@ public class UserServiceImpl implements UserService {
             SmsSingleSenderResult smsResult = sender.send(Constants.type, Constants.nationCode, userMobile, "【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。", null, null);
             if (smsResult.result == 0) {
                 //成功
-                redisUtil.set(userMobile, SMSCode, Constants.expireTime);
+                redisUtil.set("SMS:" + userMobile, SMSCode, SMSexpireTime);
                 result.put(Api.STATUS, Api.SUCCESS);
                 result.put(Api.MESSAGE, "获取验证码成功");
                 return result;
@@ -91,7 +107,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
         Map<String, Object> result = new HashMap<>();
 
-        Integer realSmsCode = (Integer) redisUtil.get(userMobile);
+        Integer realSmsCode = (Integer) redisUtil.get("SMS:" + userMobile);
         if (realSmsCode != null) {
             if (smsCode == realSmsCode) {
                 result.put(Api.STATUS, Api.SUCCESS);
