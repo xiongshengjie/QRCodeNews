@@ -28,6 +28,17 @@ public class News {
         this.newsCategory = newsCategory;
     }
 
+    public News(String newsId, String newsTitle, String newsUrl, String newsAuthor, String newsImg, Integer newsCategory, Date createDatetime, Date updateDatetime) {
+        this.newsId = newsId;
+        this.newsTitle = newsTitle;
+        this.newsUrl = newsUrl;
+        this.newsAuthor = newsAuthor;
+        this.newsImg = newsImg;
+        this.newsCategory = newsCategory;
+        this.createDatetime = createDatetime;
+        this.updateDatetime = updateDatetime;
+    }
+
     public News() {
         super();
     }

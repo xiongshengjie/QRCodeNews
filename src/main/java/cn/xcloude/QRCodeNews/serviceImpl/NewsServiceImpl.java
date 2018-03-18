@@ -3,11 +3,14 @@ package cn.xcloude.QRCodeNews.serviceImpl;
 import cn.xcloude.QRCodeNews.constant.Api;
 import cn.xcloude.QRCodeNews.constant.Constants;
 import cn.xcloude.QRCodeNews.entity.News;
+import cn.xcloude.QRCodeNews.entity.NewsExample;
 import cn.xcloude.QRCodeNews.mapper.NewsMapper;
 import cn.xcloude.QRCodeNews.service.NewsService;
 import cn.xcloude.QRCodeNews.utils.FileUploadUtils;
 import cn.xcloude.QRCodeNews.utils.HtmlUtil;
 import cn.xcloude.QRCodeNews.utils.IdUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static cn.xcloude.QRCodeNews.constant.Api.SERVER_ERROR_MESSAGE;
@@ -127,6 +131,21 @@ public class NewsServiceImpl implements NewsService {
         result.put(Api.MESSAGE, "发布成功");
         result.put("result", recordNew);
 
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> listNews(int category, int pageNum, int pageCount) {
+
+        NewsExample example = new NewsExample();
+        example.createCriteria().andNewsCategoryEqualTo(category);
+        PageHelper.startPage(pageNum,pageCount);
+        List<News> news = newsMapper.selectByExample(example);
+        PageInfo<News> pageInfo = new PageInfo<>(news);
+        Map<String,Object> result = new HashMap<>();
+        result.put(Api.STATUS, Api.SUCCESS);
+        result.put(Api.MESSAGE, "获取成功");
+        result.put("result",pageInfo.getList());
         return result;
     }
 }

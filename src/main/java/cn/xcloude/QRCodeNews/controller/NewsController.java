@@ -35,4 +35,14 @@ public class NewsController {
 
         return newsService.publishNews(files, title, author, category, html, request);
     }
+
+    @RequestMapping("/list")
+    @ResponseBody
+    public Map<String, Object> listNews(@RequestParam(value = "category", required = true) int category,
+                                        @RequestParam(value = "pageNum", required = true) int pageNum,
+                                        @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
+
+        return newsService.listNews(category,pageNum,pageCount);
+
+    }
 }

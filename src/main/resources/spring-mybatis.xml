@@ -37,7 +37,7 @@
         <property name="poolPreparedStatements" value="true" />
         <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
     </bean>
-  
+
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
@@ -53,20 +53,20 @@
                         <!-- config params as the following -->
                         <value>
                             dialect=mysql
-                            reasonable=true
+                            reasonable=false
                         </value>
                     </property>
                 </bean>
             </array>
         </property>
     </bean>
-  
+
     <!-- mapper接口所在包名，Spring会自动查找其下的类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="cn.xcloude.QRCodeNews.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
-  
+
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
     <bean id="transactionManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
