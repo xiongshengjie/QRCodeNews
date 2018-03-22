@@ -172,4 +172,21 @@
       update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
     where news_id = #{newsId,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectByPage" parameterType = "int" resultMap="BaseResultMap">
+    SELECT
+      news_id,
+      news_title,
+      news_url,
+      user_nickname AS news_author,
+      news_img,
+      news_category,
+      news.create_datetime,
+      news.update_datetime
+    FROM news
+    LEFT OUTER JOIN news_user
+    ON news.news_author = news_user.user_id
+    WHERE news_category = #{category,jdbcType=INTEGER}
+
+  </select>
 </mapper>

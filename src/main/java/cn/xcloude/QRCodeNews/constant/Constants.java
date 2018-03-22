@@ -11,7 +11,8 @@ public final class Constants {
     }
 
     //public final static String baseUrl = "https://www.xcloude.cn/QRCodeNews/";
-    public static final String baseUrl = "http://192.168.0.109:8080/QRCodeNews";
+//    public static final String baseUrl = "http://192.168.0.104:8080/QRCodeNews";
+    public static final String baseUrl = "http://10.4.0.217:8080/QRCodeNews";
 
     //腾讯云SMS应用
     public static final int AppID = 1400071526;

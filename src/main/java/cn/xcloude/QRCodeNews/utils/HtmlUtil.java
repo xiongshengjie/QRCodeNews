@@ -29,6 +29,7 @@ public class HtmlUtil {
             "\n" +
             "    <link href=\"../../../dist/summernote.css\" rel=\"stylesheet\">\n" +
             "    <script src=\"../../../dist/summernote.js\"></script>\n" +
+            "    <title></title>" +
             "</head>\n" +
             "</html>";
 
@@ -39,8 +40,8 @@ public class HtmlUtil {
     }
 
     public static String buildHtml(String html,String title){
-        head.appendElement("title").text(title);
-        body.html(html);
+        head.getElementsByTag("title").get(0).text(title);
+        body.html("<div style=\"margin : 10px;\">" + html + "</div>");
         return doc.toString();
     }
 
