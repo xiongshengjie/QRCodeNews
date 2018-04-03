@@ -18,6 +18,7 @@ public class Api {
     public static final int SERVER_ERROR = 5000;
     public static final int USER_ERROR = 4001;
     public static final int MOBILE_ERROR = 4002;
+    public static final int NO_NEWS_ERROR = 4003;
 
     public static final String SERVER_ERROR_MESSAGE = "服务器内部错误";
 }

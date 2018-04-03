@@ -45,4 +45,20 @@ public class NewsController {
         return newsService.listNews(category,pageNum,pageCount);
 
     }
+
+    @RequestMapping("/getNewsById")
+    @ResponseBody
+    public Map<String,Object> getNewsById(@RequestParam(value = "id" , required = true) String id){
+        return newsService.getNewsById(id);
+    }
+
+    @RequestMapping("/listNewsByUser")
+    @ResponseBody
+    public Map<String, Object> listNewsByUser(@RequestParam(value = "userId", required = true) String userId,
+                                        @RequestParam(value = "pageNum", required = true) int pageNum,
+                                        @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
+
+        return newsService.listNewsByUser(userId,pageNum,pageCount);
+
+    }
 }

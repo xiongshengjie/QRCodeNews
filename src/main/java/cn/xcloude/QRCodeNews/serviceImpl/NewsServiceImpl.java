@@ -135,11 +135,37 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Map<String, Object> listNews(int category, int pageNum, int pageCount) {
         PageHelper.startPage(pageNum, pageCount);
-        List<News> news = newsMapper.selectByPage(category);
+        List<News> news = newsMapper.selectByCategoryPage(category);
         Map<String, Object> result = new HashMap<>();
         result.put(Api.STATUS, Api.SUCCESS);
         result.put(Api.MESSAGE, "获取成功");
         result.put("result", news);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> getNewsById(String id) {
+        Map<String,Object> result = new HashMap<>();
+        News news = newsMapper.selectByPrimaryKey(id);
+        if(news == null){
+            result.put(Api.STATUS,Api.NO_NEWS_ERROR);
+            result.put(Api.MESSAGE,"查无此文");
+            return result;
+        }
+        result.put(Api.STATUS,Api.SUCCESS);
+        result.put(Api.MESSAGE,"获取成功");
+        result.put("result",news);
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> listNewsByUser(String userId, int pageNum, int pageCount) {
+        PageHelper.startPage(pageNum, pageCount);
+        List<News> list = newsMapper.selectByUserPage(userId);
+        Map<String,Object> result = new HashMap<>();
+        result.put(Api.STATUS, Api.SUCCESS);
+        result.put(Api.MESSAGE, "获取成功");
+        result.put("result", list);
         return result;
     }
 }

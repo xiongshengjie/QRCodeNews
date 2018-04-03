@@ -22,5 +22,7 @@ public interface NewsMapper {
 
     int updateByPrimaryKey(News record);
 
-    List<News> selectByPage(int category);
+    List<News> selectByCategoryPage(int category);
+
+    List<News> selectByUserPage(String userId);
 }

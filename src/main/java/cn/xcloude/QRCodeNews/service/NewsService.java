@@ -16,4 +16,8 @@ public interface NewsService {
     Map<String, Object> publishNews(MultipartFile[] files, String title, String author, String category, String html, HttpServletRequest request);
 
     Map<String,Object> listNews(int category,int pageNum,int pageCount);
+
+    Map<String,Object> getNewsById(String id);
+
+    Map<String,Object> listNewsByUser(String userId,int pageNum,int pageCount);
 }
