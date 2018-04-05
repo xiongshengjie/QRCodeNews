@@ -20,4 +20,6 @@ public interface NewsService {
     Map<String,Object> getNewsById(String id);
 
     Map<String,Object> listNewsByUser(String userId,int pageNum,int pageCount);
+
+    Map<String,Object> delNews(String id);
 }

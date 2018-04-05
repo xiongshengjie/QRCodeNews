@@ -50,4 +50,12 @@ public class UserController {
                                         HttpServletRequest request) {
         return userService.register(user, headFile, request);
     }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> update(User user,
+                                        @RequestParam(value = "headFile", required = false) MultipartFile headFile,
+                                        HttpServletRequest request) {
+        return userService.update(user, headFile, request);
+    }
 }

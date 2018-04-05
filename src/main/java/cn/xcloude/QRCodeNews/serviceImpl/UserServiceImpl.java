@@ -176,5 +176,46 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public Map<String, Object> update(User user, MultipartFile headFile, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+
+        if (headFile != null) {
+            // 根据日期得到目录
+            String randomDir = FileUploadUtils.generateRandomDir();
+            // 图片存储父目录
+            String imgurlParent = "head" + randomDir;
+            File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
+            // 验证目录是否存在，如果不存在，创建出来
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+
+            String fileName = headFile.getOriginalFilename();
+            // 得到随机名称
+            String randomName = FileUploadUtils.generateRandonFileName(fileName);
+            String imgurl = imgurlParent + "/" + randomName;
+            File diskFile = new File(parentDir + "/" + randomName);
+
+            try {
+                headFile.transferTo(diskFile);
+                user.setUserHead(imgurl);
+            } catch (IOException e) {
+                logger.error("head写入失败：" + e);
+            }
+        }
+        int flag = userMapper.updateByPrimaryKeySelective(user);
+        if (flag <= 0) {
+            result.put(Api.STATUS, Api.SERVER_ERROR);
+            result.put(Api.MESSAGE, "修改失败");
+        } else {
+            redisUtil.set("User:" + user.getUserName(), user, userExpireTime);
+            result.put(Api.STATUS, Api.SUCCESS);
+            result.put(Api.MESSAGE, "修改成功");
+            result.put("result", user);
+        }
+        return result;
+    }
+
 
 }

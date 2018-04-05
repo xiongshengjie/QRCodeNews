@@ -61,4 +61,10 @@ public class NewsController {
         return newsService.listNewsByUser(userId,pageNum,pageCount);
 
     }
+
+    @RequestMapping("/delNews")
+    @ResponseBody
+    public Map<String,Object> delNews(@RequestParam(value = "newsId", required = true)String id){
+        return newsService.delNews(id);
+    }
 }

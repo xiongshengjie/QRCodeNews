@@ -19,4 +19,6 @@ public interface UserService {
     Map<String, Object> checkSmsCode(String userMobile, int smsCode);
 
     Map<String, Object> register(User user, MultipartFile headFile, HttpServletRequest request);
+
+    Map<String, Object> update(User user, MultipartFile headFile, HttpServletRequest request);
 }

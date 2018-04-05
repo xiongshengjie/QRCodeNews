@@ -168,4 +168,19 @@ public class NewsServiceImpl implements NewsService {
         result.put("result", list);
         return result;
     }
+
+    @Override
+    public Map<String, Object> delNews(String id) {
+        int flag = newsMapper.deleteByPrimaryKey(id);
+        Map<String,Object> result = new HashMap<>();
+        if(flag > 0){
+            result.put(Api.STATUS, Api.SUCCESS);
+            result.put(Api.MESSAGE, "删除成功");
+            return result;
+        }else {
+            result.put(Api.STATUS, Api.ERROR);
+            result.put(Api.MESSAGE, "删除失败");
+            return result;
+        }
+    }
 }
