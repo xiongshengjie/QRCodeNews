@@ -67,6 +67,23 @@
     from news
     where news_id = #{newsId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="string" >
+    SELECT
+      news_id,
+      news_title,
+      news_url,
+      user_nickname AS news_author,
+      news_img,
+      news_category,
+      news.create_datetime,
+      news.update_datetime
+    FROM news
+    LEFT OUTER JOIN news_user
+    ON news.news_author = news_user.user_id
+    WHERE news_id = #{newsId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from news
     where news_id = #{newsId,jdbcType=VARCHAR}

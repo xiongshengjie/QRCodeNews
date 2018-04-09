@@ -25,4 +25,6 @@ public interface NewsMapper {
     List<News> selectByCategoryPage(int category);
 
     List<News> selectByUserPage(String userId);
+
+    News selectById(String newsId);
 }

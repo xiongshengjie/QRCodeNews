@@ -64,6 +64,7 @@ public class NewsServiceImpl implements NewsService {
             }
 
             for (MultipartFile file : files) {
+                boolean flag = false;
                 String fileName = file.getOriginalFilename();
                 // 得到随机名称
                 String randomName = FileUploadUtils.generateRandonFileName(fileName);
@@ -74,17 +75,20 @@ public class NewsServiceImpl implements NewsService {
                     if (fileName.equals(src.substring(src.lastIndexOf('/') + 1, src.length()))) {
                         imgNode.attr("src", Constants.baseUrl + "/" + imgurl);
                         elements.remove(element);
+                        flag = true;
                     }
                 }
-                allImgUrlBuilder.append(imgurl + "|");
-                File diskFile = new File(parentDir + "/" + randomName);
-                try {
-                    file.transferTo(diskFile);
-                } catch (IOException e) {
-                    log.error("图片上传IO异常:" + e);
-                    result.put(Api.STATUS, Api.SERVER_ERROR);
-                    result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
-                    return result;
+                if(flag) {
+                    allImgUrlBuilder.append(imgurl + "|");
+                    File diskFile = new File(parentDir + "/" + randomName);
+                    try {
+                        file.transferTo(diskFile);
+                    } catch (IOException e) {
+                        log.error("图片上传IO异常:" + e);
+                        result.put(Api.STATUS, Api.SERVER_ERROR);
+                        result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
+                        return result;
+                    }
                 }
             }
 
