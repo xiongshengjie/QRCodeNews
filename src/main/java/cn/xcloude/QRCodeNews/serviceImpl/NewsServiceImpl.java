@@ -79,7 +79,7 @@ public class NewsServiceImpl implements NewsService {
                     }
                 }
                 if(flag) {
-                    allImgUrlBuilder.append(imgurl + "|");
+                    allImgUrlBuilder.append(Constants.baseUrl + "/" + imgurl + "|");
                     File diskFile = new File(parentDir + "/" + randomName);
                     try {
                         file.transferTo(diskFile);
@@ -126,7 +126,7 @@ public class NewsServiceImpl implements NewsService {
 
         String allImgUrl = allImgUrlBuilder.toString();
         String id = IdUtils.getUUID();
-        News recordNew = new News(id, title, htmlParent + "/" + randomHtml, author, allImgUrl, Integer.parseInt(category));
+        News recordNew = new News(id, title, Constants.baseUrl + "/" + htmlParent + "/" + randomHtml, author, allImgUrl, Integer.parseInt(category));
         newsMapper.insertSelective(recordNew);
 
         result.put(Api.STATUS, Api.SUCCESS);

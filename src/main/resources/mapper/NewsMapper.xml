@@ -204,7 +204,7 @@
     LEFT OUTER JOIN news_user
     ON news.news_author = news_user.user_id
     WHERE news_category = #{category,jdbcType=INTEGER}
-
+    ORDER BY news.create_datetime DESC
   </select>
 
   <select id="selectByUserPage" parameterType = "string" resultMap="BaseResultMap">
