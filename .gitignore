@@ -1,3 +1,6 @@
+.gitignore
+.idea/
+generatorConfig.xml
 # Compiled class file
 *.class
 
