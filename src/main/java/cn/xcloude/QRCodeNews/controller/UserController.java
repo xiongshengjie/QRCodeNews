@@ -22,40 +22,40 @@ import java.util.Map;
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> login(String userName, String passWord) {
-        return userService.login(userName, passWord);
-    }
+  @RequestMapping(value = "login", method = RequestMethod.POST)
+  @ResponseBody
+  public Map<String, Object> login(String userName, String passWord) {
+    return userService.login(userName, passWord);
+  }
 
-    @RequestMapping("getSmsCode")
-    @ResponseBody
-    public Map<String, Object> getSmsCode(String userMobile) {
-        return userService.getSmsCode(userMobile);
-    }
+  @RequestMapping("getSmsCode")
+  @ResponseBody
+  public Map<String, Object> getSmsCode(String userMobile) {
+    return userService.getSmsCode(userMobile);
+  }
 
-    @RequestMapping("checkSmsCode")
-    @ResponseBody
-    public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
-        return userService.checkSmsCode(userMobile, smsCode);
-    }
+  @RequestMapping("checkSmsCode")
+  @ResponseBody
+  public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
+    return userService.checkSmsCode(userMobile, smsCode);
+  }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> register(User user,
-                                        @RequestParam(value = "headFile", required = false) MultipartFile headFile,
-                                        HttpServletRequest request) {
-        return userService.register(user, headFile, request);
-    }
+  @RequestMapping(value = "register", method = RequestMethod.POST)
+  @ResponseBody
+  public Map<String, Object> register(User user,
+                                      @RequestParam(value = "headFile", required = false) MultipartFile headFile,
+                                      HttpServletRequest request) {
+    return userService.register(user, headFile, request);
+  }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> update(User user,
-                                        @RequestParam(value = "headFile", required = false) MultipartFile headFile,
-                                        HttpServletRequest request) {
-        return userService.update(user, headFile, request);
-    }
+  @RequestMapping(value = "update", method = RequestMethod.POST)
+  @ResponseBody
+  public Map<String, Object> update(User user,
+                                    @RequestParam(value = "headFile", required = false) MultipartFile headFile,
+                                    HttpServletRequest request) {
+    return userService.update(user, headFile, request);
+  }
 }

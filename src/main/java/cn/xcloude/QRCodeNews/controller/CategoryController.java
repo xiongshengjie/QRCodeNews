@@ -12,17 +12,15 @@ import java.util.Map;
  * @author XiongShengjie
  * @date 2018/2/23 下午 1:11
  */
-
 @Controller
 @RequestMapping("/category")
 public class CategoryController {
+  @Autowired
+  private CategoryService categoryService;
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @RequestMapping("getAllCategory")
-    @ResponseBody
-    public Map<String, Object> getAllCategory() {
-        return categoryService.getAllCategory();
-    }
+  @RequestMapping("getAllCategory")
+  @ResponseBody
+  public Map<String, Object> getAllCategory() {
+    return categoryService.getAllCategory();
+  }
 }

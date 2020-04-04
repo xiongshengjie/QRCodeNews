@@ -10,9 +10,8 @@ public final class Constants {
         throw new IllegalStateException("Utility class");
     }
 
-    public final static String baseUrl = "https://www.xcloude.cn/QRCodeNews";
-//    public static final String baseUrl = "http://192.168.0.102:8080/QRCodeNews";
-//    public static final String baseUrl = "http://10.4.0.217:8080/QRCodeNews";
+//    public final static String baseUrl = "https://www.xcloude.cn/QRCodeNews";
+    public static final String baseUrl = "http://192.168.0.102:8080/QRCodeNews";
 
     //腾讯云SMS应用
     public static final int AppID = 1400071526;

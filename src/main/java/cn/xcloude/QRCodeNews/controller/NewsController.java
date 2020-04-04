@@ -21,50 +21,50 @@ import java.util.Map;
 @RequestMapping("/news")
 public class NewsController {
 
-    @Autowired
-    private NewsService newsService;
+  @Autowired
+  private NewsService newsService;
 
-    @RequestMapping("/publish")
-    @ResponseBody
-    public Map<String, Object> publishNews(@RequestParam(value = "file", required = false) MultipartFile[] files,
-                                           @RequestParam("title") String title,
-                                           @RequestParam("author") String author,
-                                           @RequestParam("category") String category,
-                                           @RequestParam("html") String html,
-                                           HttpServletRequest request) {
+  @RequestMapping("/publish")
+  @ResponseBody
+  public Map<String, Object> publishNews(@RequestParam(value = "file", required = false) MultipartFile[] files,
+                                         @RequestParam("title") String title,
+                                         @RequestParam("author") String author,
+                                         @RequestParam("category") String category,
+                                         @RequestParam("html") String html,
+                                         HttpServletRequest request) {
 
-        return newsService.publishNews(files, title, author, category, html, request);
-    }
+    return newsService.publishNews(files, title, author, category, html, request);
+  }
 
-    @RequestMapping("/list")
-    @ResponseBody
-    public Map<String, Object> listNews(@RequestParam(value = "category", required = true) int category,
-                                        @RequestParam(value = "pageNum", required = true) int pageNum,
-                                        @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
+  @RequestMapping("/list")
+  @ResponseBody
+  public Map<String, Object> listNews(@RequestParam(value = "category", required = true) int category,
+                                      @RequestParam(value = "pageNum", required = true) int pageNum,
+                                      @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
 
-        return newsService.listNews(category,pageNum,pageCount);
+    return newsService.listNews(category, pageNum, pageCount);
 
-    }
+  }
 
-    @RequestMapping("/getNewsById")
-    @ResponseBody
-    public Map<String,Object> getNewsById(@RequestParam(value = "id" , required = true) String id){
-        return newsService.getNewsById(id);
-    }
+  @RequestMapping("/getNewsById")
+  @ResponseBody
+  public Map<String, Object> getNewsById(@RequestParam(value = "id", required = true) String id) {
+    return newsService.getNewsById(id);
+  }
 
-    @RequestMapping("/listNewsByUser")
-    @ResponseBody
-    public Map<String, Object> listNewsByUser(@RequestParam(value = "userId", required = true) String userId,
-                                        @RequestParam(value = "pageNum", required = true) int pageNum,
-                                        @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
+  @RequestMapping("/listNewsByUser")
+  @ResponseBody
+  public Map<String, Object> listNewsByUser(@RequestParam(value = "userId", required = true) String userId,
+                                            @RequestParam(value = "pageNum", required = true) int pageNum,
+                                            @RequestParam(value = "pageCount", defaultValue = "10", required = false) int pageCount) {
 
-        return newsService.listNewsByUser(userId,pageNum,pageCount);
+    return newsService.listNewsByUser(userId, pageNum, pageCount);
 
-    }
+  }
 
-    @RequestMapping("/delNews")
-    @ResponseBody
-    public Map<String,Object> delNews(@RequestParam(value = "newsId", required = true)String id){
-        return newsService.delNews(id);
-    }
+  @RequestMapping("/delNews")
+  @ResponseBody
+  public Map<String, Object> delNews(@RequestParam(value = "newsId", required = true) String id) {
+    return newsService.delNews(id);
+  }
 }
