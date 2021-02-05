@@ -3,76 +3,109 @@ package cn.xcloude.QRCodeNews.entity;
 import java.util.Date;
 
 public class NewsComment {
-    private Integer commentId;
+  private Integer commentId;
 
-    private String newsId;
+  private String newsId;
 
-    private String comment;
+  private String comment;
 
-    private String userIdFrom;
+  private Integer replyCount;
 
-    private String userIdTo;
+  private Integer replyCommentId;
 
-    private Date createDatetime;
+  private Integer rootCommentId;
 
-    public NewsComment(Integer commentId, String newsId, String comment, String userIdFrom, String userIdTo, Date createDatetime) {
-        this.commentId = commentId;
-        this.newsId = newsId;
-        this.comment = comment;
-        this.userIdFrom = userIdFrom;
-        this.userIdTo = userIdTo;
-        this.createDatetime = createDatetime;
-    }
+  private String userId;
 
-    public NewsComment() {
-        super();
-    }
+  private Date createDatetime;
 
-    public Integer getCommentId() {
-        return commentId;
-    }
+  private Date updateDatetime;
 
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
+  public NewsComment(Integer commentId, String newsId, String comment, Integer replyCount, Integer replyCommentId, Integer rootCommentId, String userId, Date createDatetime, Date updateDatetime) {
+    this.commentId = commentId;
+    this.newsId = newsId;
+    this.comment = comment;
+    this.replyCount = replyCount;
+    this.replyCommentId = replyCommentId;
+    this.rootCommentId = rootCommentId;
+    this.userId = userId;
+    this.createDatetime = createDatetime;
+    this.updateDatetime = updateDatetime;
+  }
 
-    public String getNewsId() {
-        return newsId;
-    }
+  public NewsComment() {
+    super();
+  }
 
-    public void setNewsId(String newsId) {
-        this.newsId = newsId == null ? null : newsId.trim();
-    }
+  public Integer getCommentId() {
+    return commentId;
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public void setCommentId(Integer commentId) {
+    this.commentId = commentId;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
-    }
+  public String getNewsId() {
+    return newsId;
+  }
 
-    public String getUserIdFrom() {
-        return userIdFrom;
-    }
+  public void setNewsId(String newsId) {
+    this.newsId = newsId == null ? null : newsId.trim();
+  }
 
-    public void setUserIdFrom(String userIdFrom) {
-        this.userIdFrom = userIdFrom == null ? null : userIdFrom.trim();
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public String getUserIdTo() {
-        return userIdTo;
-    }
+  public void setComment(String comment) {
+    this.comment = comment == null ? null : comment.trim();
+  }
 
-    public void setUserIdTo(String userIdTo) {
-        this.userIdTo = userIdTo == null ? null : userIdTo.trim();
-    }
+  public Integer getReplyCount() {
+    return replyCount;
+  }
 
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
+  public void setReplyCount(Integer replyCount) {
+    this.replyCount = replyCount;
+  }
 
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
+  public Integer getReplyCommentId() {
+    return replyCommentId;
+  }
+
+  public void setReplyCommentId(Integer replyCommentId) {
+    this.replyCommentId = replyCommentId;
+  }
+
+  public Integer getRootCommentId() {
+    return rootCommentId;
+  }
+
+  public void setRootCommentId(Integer rootCommentId) {
+    this.rootCommentId = rootCommentId;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId == null ? null : userId.trim();
+  }
+
+  public Date getCreateDatetime() {
+    return createDatetime;
+  }
+
+  public void setCreateDatetime(Date createDatetime) {
+    this.createDatetime = createDatetime;
+  }
+
+  public Date getUpdateDatetime() {
+    return updateDatetime;
+  }
+
+  public void setUpdateDatetime(Date updateDatetime) {
+    this.updateDatetime = updateDatetime;
+  }
 }

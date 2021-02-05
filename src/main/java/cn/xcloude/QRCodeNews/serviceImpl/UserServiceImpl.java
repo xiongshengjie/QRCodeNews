@@ -12,7 +12,6 @@ import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,188 +33,188 @@ import static cn.xcloude.QRCodeNews.constant.Constants.userExpireTime;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+  private final UserMapper userMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+  private final RedisUtil redisUtil;
 
-    @Autowired
-    private RedisUtil redisUtil;
+  public UserServiceImpl(UserMapper userMapper, RedisUtil redisUtil) {
+    this.userMapper = userMapper;
+    this.redisUtil = redisUtil;
+  }
 
-    @Override
-    public Map<String, Object> login(String userName, String passWord) {
+  @Override
+  public Map<String, Object> login(String userName, String passWord) {
 
-        Map<String, Object> result = new HashMap<>();
-        User user = new User(userName, passWord);
-        User temp = (User) redisUtil.get("User:" + userName);
+    Map<String, Object> result = new HashMap<>();
+    User user = new User(userName, passWord);
+    User temp = (User) redisUtil.get("User:" + userName);
 
-        if (temp != null) {
-            if (!passWord.equals(user.getUserPassword())) {
-                result.put(Api.STATUS, Api.USER_ERROR);
-                result.put(Api.MESSAGE, "用户名或密码错误");
-                return result;
-            }
-            user = temp;
-        } else {
-            user = userMapper.loginByName(user);
-            if (user == null) {
-                result.put(Api.STATUS, Api.USER_ERROR);
-                result.put(Api.MESSAGE, "用户名或密码错误");
-                return result;
-            } else {
-                redisUtil.set("User:" + userName, user, userExpireTime);
-            }
-        }
+    if (temp != null) {
+      if (!passWord.equals(temp.getUserPassword())) {
+        result.put(Api.STATUS, Api.USER_ERROR);
+        result.put(Api.MESSAGE, "用户名或密码错误");
+        return result;
+      }
+      user = temp;
+    } else {
+      user = userMapper.loginByName(user);
+      if (user == null) {
+        result.put(Api.STATUS, Api.USER_ERROR);
+        result.put(Api.MESSAGE, "用户名或密码错误");
+        return result;
+      } else {
+        redisUtil.set("User:" + userName, user, userExpireTime);
+      }
+    }
+    result.put(Api.STATUS, Api.SUCCESS);
+    result.put(Api.MESSAGE, "登录成功");
+    result.put("result", user);
+    return result;
+
+  }
+
+  @Override
+  public Map<String, Object> getSmsCode(String userMobile) {
+
+    Map<String, Object> result = new HashMap<>();
+
+    int SMSCode = new Random().nextInt(899999) + 100000;
+
+    try {
+      SmsSingleSender sender = new SmsSingleSender(Constants.AppID, Constants.AppKey);
+      SmsSingleSenderResult smsResult = sender.send(Constants.type, Constants.nationCode, userMobile, "【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。", null, null);
+      if (smsResult.result == 0) {
+        //成功
+        redisUtil.set("SMS:" + userMobile, SMSCode, SMSexpireTime);
         result.put(Api.STATUS, Api.SUCCESS);
-        result.put(Api.MESSAGE, "登录成功");
-        result.put("result", user);
+        result.put(Api.MESSAGE, "获取验证码成功");
         return result;
-
-    }
-
-    @Override
-    public Map<String, Object> getSmsCode(String userMobile) {
-
-        Map<String, Object> result = new HashMap<>();
-
-        int SMSCode = new Random().nextInt(899999) + 100000;
-
-        try {
-            SmsSingleSender sender = new SmsSingleSender(Constants.AppID, Constants.AppKey);
-            SmsSingleSenderResult smsResult = sender.send(Constants.type, Constants.nationCode, userMobile, "【xcloude】您的验证码是：" + SMSCode + "，请于2分钟内填写。如非本人操作，请忽略本短信。", null, null);
-            if (smsResult.result == 0) {
-                //成功
-                redisUtil.set("SMS:" + userMobile, SMSCode, SMSexpireTime);
-                result.put(Api.STATUS, Api.SUCCESS);
-                result.put(Api.MESSAGE, "获取验证码成功");
-                return result;
-            } else {
-                result.put(Api.STATUS, Api.SERVER_ERROR);
-                result.put(Api.MESSAGE, "短信服务异常");
-                return result;
-            }
-        } catch (Exception e) {
-            logger.error("服务器错误：" + e);
-            result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
-            return result;
-        }
-    }
-
-    @Override
-    public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
-        Map<String, Object> result = new HashMap<>();
-
-        Integer realSmsCode = (Integer) redisUtil.get("SMS:" + userMobile);
-        if (realSmsCode != null) {
-            if (smsCode == realSmsCode) {
-                result.put(Api.STATUS, Api.SUCCESS);
-                result.put(Api.MESSAGE, "验证成功");
-            } else {
-                result.put(Api.STATUS, Api.SERVER_ERROR);
-                result.put(Api.MESSAGE, "验证码错误");
-            }
-        } else {
-            result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "验证码已失效");
-        }
+      } else {
+        result.put(Api.STATUS, Api.SERVER_ERROR);
+        result.put(Api.MESSAGE, "短信服务异常");
         return result;
+      }
+    } catch (Exception e) {
+      logger.error("服务器错误：" + e);
+      result.put(Api.STATUS, Api.SERVER_ERROR);
+      result.put(Api.MESSAGE, SERVER_ERROR_MESSAGE);
+      return result;
+    }
+  }
+
+  @Override
+  public Map<String, Object> checkSmsCode(String userMobile, int smsCode) {
+    Map<String, Object> result = new HashMap<>();
+
+    Integer realSmsCode = (Integer) redisUtil.get("SMS:" + userMobile);
+    if (realSmsCode != null) {
+      if (smsCode == realSmsCode) {
+        result.put(Api.STATUS, Api.SUCCESS);
+        result.put(Api.MESSAGE, "验证成功");
+      } else {
+        result.put(Api.STATUS, Api.SERVER_ERROR);
+        result.put(Api.MESSAGE, "验证码错误");
+      }
+    } else {
+      result.put(Api.STATUS, Api.SERVER_ERROR);
+      result.put(Api.MESSAGE, "验证码已失效");
+    }
+    return result;
+  }
+
+  @Override
+  public Map<String, Object> register(User user, MultipartFile headFile, HttpServletRequest request) {
+
+    Map<String, Object> result = new HashMap<>();
+
+    if (userMapper.isMobileRight(user.getUserMobile()) != null) {
+      result.put(Api.STATUS, Api.USER_ERROR);
+      result.put(Api.MESSAGE, "手机号已被注册");
+      return result;
     }
 
-    @Override
-    public Map<String, Object> register(User user, MultipartFile headFile, HttpServletRequest request) {
+    if (headFile == null) {
+      user.setUserHead("head/default.png");
+    } else {
+      // 根据日期得到目录
+      String randomDir = FileUploadUtils.generateRandomDir();
+      // 图片存储父目录
+      String imgurlParent = "head" + randomDir;
+      File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
+      // 验证目录是否存在，如果不存在，创建出来
+      if (!parentDir.exists()) {
+        parentDir.mkdirs();
+      }
 
-        Map<String, Object> result = new HashMap<>();
+      String fileName = headFile.getOriginalFilename();
+      // 得到随机名称
+      String randomName = FileUploadUtils.generateRandonFileName(fileName);
+      String imgurl = imgurlParent + "/" + randomName;
+      File diskFile = new File(parentDir + "/" + randomName);
 
-        if (userMapper.isMobileRight(user.getUserMobile()) != null) {
-            result.put(Api.STATUS, Api.USER_ERROR);
-            result.put(Api.MESSAGE, "手机号已被注册");
-            return result;
-        }
-
-        if (headFile == null) {
-            user.setUserHead("head/default.png");
-        } else {
-            // 根据日期得到目录
-            String randomDir = FileUploadUtils.generateRandomDir();
-            // 图片存储父目录
-            String imgurlParent = "head" + randomDir;
-            File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
-            // 验证目录是否存在，如果不存在，创建出来
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-
-            String fileName = headFile.getOriginalFilename();
-            // 得到随机名称
-            String randomName = FileUploadUtils.generateRandonFileName(fileName);
-            String imgurl = imgurlParent + "/" + randomName;
-            File diskFile = new File(parentDir + "/" + randomName);
-
-            try {
-                headFile.transferTo(diskFile);
-                user.setUserHead(imgurl);
-            } catch (IOException e) {
-                logger.error("head写入失败：" + e);
-                user.setUserHead("head/default.png");
-            }
-        }
-
-        String id = IdUtils.getUUID();
-        user.setUserId(id);
-        int flag = userMapper.insertSelective(user);
-        if (flag <= 0) {
-            result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "注册失败");
-        } else {
-            result.put(Api.STATUS, Api.SUCCESS);
-            result.put(Api.MESSAGE, "注册成功");
-            result.put("result", user);
-        }
-        return result;
+      try {
+        headFile.transferTo(diskFile);
+        user.setUserHead(imgurl);
+      } catch (IOException e) {
+        logger.error("head写入失败：" + e);
+        user.setUserHead("head/default.png");
+      }
     }
 
-    @Override
-    public Map<String, Object> update(User user, MultipartFile headFile, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
-        if (headFile != null) {
-            // 根据日期得到目录
-            String randomDir = FileUploadUtils.generateRandomDir();
-            // 图片存储父目录
-            String imgurlParent = "head" + randomDir;
-            File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
-            // 验证目录是否存在，如果不存在，创建出来
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-
-            String fileName = headFile.getOriginalFilename();
-            // 得到随机名称
-            String randomName = FileUploadUtils.generateRandonFileName(fileName);
-            String imgurl = imgurlParent + "/" + randomName;
-            File diskFile = new File(parentDir + "/" + randomName);
-
-            try {
-                headFile.transferTo(diskFile);
-                user.setUserHead(imgurl);
-            } catch (IOException e) {
-                logger.error("head写入失败：" + e);
-            }
-        }
-        int flag = userMapper.updateByPrimaryKeySelective(user);
-        if (flag <= 0) {
-            result.put(Api.STATUS, Api.SERVER_ERROR);
-            result.put(Api.MESSAGE, "修改失败");
-        } else {
-            redisUtil.set("User:" + user.getUserName(), user, userExpireTime);
-            result.put(Api.STATUS, Api.SUCCESS);
-            result.put(Api.MESSAGE, "修改成功");
-            result.put("result", user);
-        }
-        return result;
+    String id = IdUtils.getUUID();
+    user.setUserId(id);
+    int flag = userMapper.insertSelective(user);
+    if (flag <= 0) {
+      result.put(Api.STATUS, Api.SERVER_ERROR);
+      result.put(Api.MESSAGE, "注册失败");
+    } else {
+      result.put(Api.STATUS, Api.SUCCESS);
+      result.put(Api.MESSAGE, "注册成功");
+      result.put("result", user);
     }
+    return result;
+  }
 
+  @Override
+  public Map<String, Object> update(User user, MultipartFile headFile, HttpServletRequest request) {
+    Map<String, Object> result = new HashMap<>();
 
+    if (headFile != null) {
+      // 根据日期得到目录
+      String randomDir = FileUploadUtils.generateRandomDir();
+      // 图片存储父目录
+      String imgurlParent = "head" + randomDir;
+      File parentDir = new File(request.getServletContext().getRealPath(imgurlParent));
+      // 验证目录是否存在，如果不存在，创建出来
+      if (!parentDir.exists()) {
+        parentDir.mkdirs();
+      }
+
+      String fileName = headFile.getOriginalFilename();
+      // 得到随机名称
+      String randomName = FileUploadUtils.generateRandonFileName(fileName);
+      String imgurl = imgurlParent + "/" + randomName;
+      File diskFile = new File(parentDir + "/" + randomName);
+
+      try {
+        headFile.transferTo(diskFile);
+        user.setUserHead(imgurl);
+      } catch (IOException e) {
+        logger.error("head写入失败：" + e);
+      }
+    }
+    int flag = userMapper.updateByPrimaryKeySelective(user);
+    if (flag <= 0) {
+      result.put(Api.STATUS, Api.SERVER_ERROR);
+      result.put(Api.MESSAGE, "修改失败");
+    } else {
+      redisUtil.set("User:" + user.getUserName(), user, userExpireTime);
+      result.put(Api.STATUS, Api.SUCCESS);
+      result.put(Api.MESSAGE, "修改成功");
+      result.put("result", user);
+    }
+    return result;
+  }
 }
